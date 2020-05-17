@@ -1,0 +1,42 @@
+.cookie-consent {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0.8em;
+    padding: 1.2em;
+
+    position: fixed; /* Ensure nothing overflows on page or flex + fixed position does not work. */
+
+    bottom: 0.1em;
+    left: 0.1em;
+
+    background: inherit;
+    color: inherit;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px;
+} 
+.cookie-consent__text {
+    margin-bottom: 1em;
+}
+.cookie-consent__buttons {
+    display: flex;
+    flex-direction:row;
+    justify-content: flex-end;  
+    text-align: center;  
+}
+.cookie-consent__buttons-button
+{
+    cursor: pointer;
+    border-radius: 3px;
+    padding:0.5em;
+}
+.cookie-consent__buttons__close {
+    background: #008AD7;
+    color: white;
+    padding-left:1em;
+    padding-right:1em;
+}
+.cookie-consent__buttons__read-more > a {
+    color: #008AD7; 
+    margin-right:1em;
+}
