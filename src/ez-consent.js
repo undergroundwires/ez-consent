@@ -1,22 +1,3 @@
-/*
-    Usage:
-            ez_consent.init();
-        OR
-            ez_consent.init(
-            {
-                always_show: false          // Always shows banner on load, default: false
-                privacy_url: "/privacy",    // URL that "more" button goes to,  default: "/privacy/"
-                target_attribute : "_blank", // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab
-                texts: {
-                main: "We use cookies",     // The text that's shown on the banner, default: "This website uses cookies & similar."
-                buttons:
-                {
-                    ok: "ok",               // OK button to hide the text, default: "ok"
-                    more: "more"            // More button that shows the privacy policy, default "more"
-                }
-                }
-            });
-*/
 export const ez_consent = (() => {
     const ui = (() => {
         const cssClassNames = {
