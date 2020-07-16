@@ -6,6 +6,7 @@
             {
                 always_show: false          // Always shows banner on load, default: false
                 privacy_url: "/privacy",    // URL that "more" button goes to,  default: "/privacy/"
+                target_attribute : "_blank" // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab
                 texts: {
                 main: "We use cookies",     // The text that's shown on the banner, default: "This website uses cookies & similar."
                 buttons:
@@ -27,7 +28,7 @@ export const ez_consent = (() => {
             <div class="${cssClassNames.root} ${cssClassNames.hide}">
                 <div class="cookie-consent__text">{main}</div>
                 <div class="cookie-consent__buttons">
-                    <div class="${cssClassNames.button} cookie-consent__buttons__read-more"><a href="{privacy_url}" target="_blank">{more}</a></div>
+                    <div class="${cssClassNames.button} cookie-consent__buttons__read-more"><a href="{privacy_url}" target="{target_attribute}">{more}</a></div>
                     <div class="${cssClassNames.button} cookie-consent__buttons__close">{ok}</div>
                 </div>
             </div>
@@ -39,7 +40,8 @@ export const ez_consent = (() => {
                 .replace("{main}", options.texts.main)
                 .replace("{more}", options.texts.buttons.more)
                 .replace("{ok}", options.texts.buttons.ok)
-                .replace("{privacy_url}", options.privacy_url);
+                .replace("{privacy_url}", options.privacy_url)
+                .replace("{target_attribute}", options.target_attribute);
         }
         function getElements() {
             return {
@@ -131,6 +133,7 @@ export const ez_consent = (() => {
         options.texts.buttons = options.texts.buttons || {};
         options.texts.buttons.more = options.texts.buttons.more || "More";
         options.texts.buttons.ok = options.texts.buttons.ok || "OK";
+        options.target_attribute = options.target_attribute || "_blank";
         return options;
     }
 
