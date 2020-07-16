@@ -78,14 +78,15 @@ or with all optional options:
 ```js
 ez_consent.init(
   {
-    always_show: false        // Always shows banner on load, default: false
-    privacy_url: "/privacy",  // URL that "more" button goes to, default: "/privacy/"
+    always_show: false,             // Always shows banner on load, default: false
+    privacy_url: "/privacy",        // URL that "more" button goes to, default: "/privacy/"
+    target_attribute : "_blank",    // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab    
     texts: {
-      main: "We use cookies", // The text that's shown on the banner, default: "This website uses cookies & similar."
+      main: "We use cookies",       // The text that's shown on the banner, default: "This website uses cookies & similar."
       buttons:
       {
-        ok: "ok",             // OK button to hide the text, default: "ok"
-        more: "more"          // More button that shows the privacy policy, default "more"
+        ok: "ok",                   // OK button to hide the text, default: "ok"
+        more: "more"                // More button that shows the privacy policy, default "more"
       }
     }
   });
