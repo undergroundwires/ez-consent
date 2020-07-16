@@ -42,7 +42,7 @@ It's the simplest way. Just add it to your page:
 - As a git submodule:
   - Go to the folder you wish to have the repository
   - Run `git submodule add https://github.com/undergroundwires/safe-email`
-- ❗ Only CDN and NPM solutions will have minified files with polyfills (`dist/` folder)
+- ❗ Only CDN and NPM solutions [will have minified files with polyfills (`dist/` folder)](#package-contents)
 
 Add it to your page:
 
@@ -137,25 +137,19 @@ You're welcome to contribute your theme to the project in [`./src/themes`](./src
 
 *[top↑](#ez-consent)*
 
-## GitOps
-
-CI/CD is fully automated for this repo using different GIT events & GitHub actions.
-
-### On pull request
-
-![ez-consent actions on PR](./img/on-pr.png)
-
-### On master
-
-![ez-consent actions on master](./img/on-master.png)
-
-### On release
-
-![ez-consent actions on release](./img/on-release.png)
+## Package contents
 
 The deployed packages includes a `dist/` folder that adds polyfills to the files and distributes them as:
 
 - minified (`.min.js`, `.min.css`) files for production usage
 - non-minified (`.js`, `.css`) files for debugging
+
+*[top↑](#ez-consent)*
+
+## GitOps
+
+CI/CD is fully automated for this repo using different GIT events & GitHub actions.
+
+![ez-consent continuous integration and deployment flow](./img/gitops.png)
 
 *[top↑](#ez-consent)*
