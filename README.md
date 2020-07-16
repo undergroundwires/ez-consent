@@ -2,15 +2,15 @@
 
 > 🍪 Minimal & vanilla JS only cookie consent banner with no dependencies.
 
+[![](https://img.shields.io/npm/v/ez-consent)](https://www.npmjs.com/package/ez-consent)
+[![](https://data.jsdelivr.com/v1/package/npm/ez-consent/badge?style=rounded)](https://www.jsdelivr.com/package/npm/ez-consent)
 [![](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/undergroundwires/ez-consent/issues)
 [![](https://github.com/undergroundwires/ez-consent/workflows/Publish/badge.svg)](./.github/workflows/publish.yaml)
 [![](https://github.com/undergroundwires/ez-consent/workflows/Build%20&%20test/badge.svg)](./.github/workflows/build-and-test.yaml)
 [![](https://github.com/undergroundwires/ez-consent/workflows/Bump%20&%20release/badge.svg)](./.github/workflows/bump-and-release.yaml)
 [![](https://github.com/undergroundwires/ez-consent/workflows/Quality%20checks/badge.svg)](./.github/workflows/quality-checks.yaml)
-[![](https://img.shields.io/npm/v/ez-consent)](https://www.npmjs.com/package/ez-consent)
 [![Auto-versioned by bump-everywhere](https://github.com/undergroundwires/bump-everywhere/blob/master/badge.svg?raw=true)](https://github.com/undergroundwires/bump-everywhere)
-<!-- [![](https://img.shields.io/npm/dm/ez-consent)](https://www.npmjs.com/package/ez-consent)
-[![](https://data.jsdelivr.com/v1/package/npm/ez-consent/badge?style=rounded)](https://www.jsdelivr.com/package/npm/ez-consent) -->
+<!-- [![](https://img.shields.io/npm/dm/ez-consent)](https://www.npmjs.com/package/ez-consent) -->
 
 - Vanilla JavaScript only ✔️
 - It does not track you ✔️
@@ -37,12 +37,11 @@ It's the simplest way. Just add it to your page:
 
 #### Option B: Install
 
-- Using NPM (recommended): `npm install ez-consent --save`
-- Using bower: `bower install undergroundwires/ez-consent`
-- As a git submodule:
+- Using NPM: `npm install ez-consent --save`
+- Or using yarn: `yarn add ez-consent`
+- Or as a git submodule (not recommended):
   - Go to the folder you wish to have the repository
   - Run `git submodule add https://github.com/undergroundwires/safe-email`
-- ❗ Only CDN and NPM solutions [will have minified files with polyfills (`dist/` folder)](#package-contents)
 
 Add it to your page:
 
@@ -78,15 +77,15 @@ or with all optional options:
 ```js
 ez_consent.init(
   {
-    always_show: false,             // Always shows banner on load, default: false
-    privacy_url: "/privacy",        // URL that "more" button goes to, default: "/privacy/"
-    target_attribute : "_blank",    // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab    
+    always_show: false,               // Always shows banner on load, default: false
+    privacy_url: "/privacy",          // URL that "more" button goes to, default: "/privacy/"
+    target_attribute : "_blank",      // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab
     texts: {
-      main: "We use cookies",       // The text that's shown on the banner, default: "This website uses cookies & similar."
+      main: "We use cookies",         // The text that's shown on the banner, default: "This website uses cookies & similar."
       buttons:
       {
-        ok: "ok",                   // OK button to hide the text, default: "ok"
-        more: "more"                // More button that shows the privacy policy, default "more"
+        ok: "ok",                     // OK button to hide the text, default: "ok"
+        more: "more"                  // More button that shows the privacy policy, default "more"
       }
     }
   });
@@ -99,42 +98,36 @@ You can also force to show banner always by having `force-consent` query paramet
 
 ### 3. Style
 
-You can choose one from existing themes:
-
 #### Existing themes
 
 You can choose one of the following existing theme to get going:
 
 ##### box-bottom-left.css
 
+![box-bottom-left](./img/themes/box-bottom-left.png)
+
+[Source file](./src/themes/box-bottom-left.css) | [See it live](https://cloudarchitecture.io/?force-consent) | [Preview on CodePen](https://codepen.io/undergroundwires/pen/qBdzmyj)
+
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1.1.1/dist/themes/box-bottom-left.min.css">
 ```
 
-- [Source file](./src/themes/box-bottom-left.css)
-- [See it live](https://cloudarchitecture.io/?force-consent)
-- [Preview on CodePen](https://codepen.io/undergroundwires/pen/qBdzmyj)
-
-![box-bottom-left](./img/themes/box-bottom-left.png)
-
 ##### subtle-bottom-right.css
+
+![subtle-bottom-right](./img/themes/subtle-bottom-right-light.png)
+![subtle-bottom-right-dark](./img/themes/subtle-bottom-right-dark.png)
+
+[Source file](./src/themes/subtle-bottom-right.css) | [See it live](https://erkinekici.com/?force-consent) | [Preview on CodePen](https://codepen.io/undergroundwires/pen/MWwMmqw)
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1.1.1/dist/themes/subtle-bottom-right.min.css">
 ```
 
-- [Source file](./src/themes/subtle-bottom-right.css)
-- [See it live](https://erkinekici.com/?force-consent)
-- [Preview on CodePen](https://codepen.io/undergroundwires/pen/MWwMmqw)
-
-![subtle-bottom-right](./img/themes/subtle-bottom-right-light.png)
-![subtle-bottom-right-dark](./img/themes/subtle-bottom-right-dark.png)
-
 #### Custom themes
 
-Or you can create your theme very easily & import it just by looking at [existing themes](./src/themes/) or [the HTML](./src/ez-consent.js#L18). The script uses a few classes [BEM](http://getbem.com/naming/) naming convention.
+Or you can create your own theme & import it. Check example themes at [existing themes](./src/themes/). [The HTML](./src/ez-consent.js#L18) uses only a few classes using [BEM](http://getbem.com/naming/) naming convention.
 
-You're welcome to contribute your theme to the project in [`./src/themes`](./src/themes/) folder 👍.
+You're welcome to contribute your theme to the project in [`./src/themes`](./src/themes/) folder by creating a pull request 👍.
 
 *[top↑](#ez-consent)*
 
@@ -149,7 +142,7 @@ The deployed packages includes a `dist/` folder that adds polyfills to the files
 
 ## GitOps
 
-CI/CD is fully automated for this repo using different GIT events & GitHub actions.
+CI/CD is fully automated for this repo using different Git events & GitHub actions.
 
 ![ez-consent continuous integration and deployment flow](./img/gitops.png)
 
