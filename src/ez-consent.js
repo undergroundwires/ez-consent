@@ -3,14 +3,18 @@ export const ez_consent = (() => {
         const cssClassNames = {
             root: "cookie-consent",
             hide: "cookie-consent__hide",
-            button: "cookie-consent__buttons-button"
+            buttons: {
+                shared: "cookie-consent__buttons-button",
+                read_more: "cookie-consent__buttons__read-more",
+                ok: "cookie-consent__buttons__close",
+            }
         }
         const consentHtml = `
             <div class="${cssClassNames.root} ${cssClassNames.hide}">
                 <div class="cookie-consent__text">{main}</div>
                 <div class="cookie-consent__buttons">
-                    <div class="${cssClassNames.button} cookie-consent__buttons__read-more"><a href="{privacy_url}" target="{target_attribute}">{more}</a></div>
-                    <div class="${cssClassNames.button} cookie-consent__buttons__close">{ok}</div>
+                    <div class="${cssClassNames.button} ${cssClassNames.buttons.read_more}"><a href="{privacy_url}" target="{target_attribute}">{more}</a></div>
+                    <div class="${cssClassNames.button} ${cssClassNames.buttons.ok}">{ok}</div>
                 </div>
             </div>
         `;
@@ -27,8 +31,16 @@ export const ez_consent = (() => {
         function getElements() {
             return {
                 root: document.querySelector(`.${cssClassNames.root}`),
-                buttons: document.querySelectorAll(`.${cssClassNames.button}`)
+                buttons: {
+                    read_more: document.querySelector(`.${cssClassNames.buttons.read_more}`),
+                    ok: document.querySelector(`.${cssClassNames.buttons.ok}`)
+                }
             };
+        }
+        function registerClickHandler(element, handler) {
+            element.addEventListener('click', () => {
+                handler();
+            });
         }
         return {
             injectHtmlAsync: (options) => new Promise((resolve) => {
@@ -50,13 +62,8 @@ export const ez_consent = (() => {
             delete: () => {
                 getElements().root.remove();
             },
-            onClick: (handler) => {
-                for(const button of getElements().buttons) {
-                    button.addEventListener('click', () => {
-                        handler();
-                    });
-                }
-            }
+            onOkButtonClick: (handler) => registerClickHandler(getElements().buttons.ok, handler),
+            onReadMoreButtonClick: (handler) => registerClickHandler(getElements().buttons.read_more, handler),
         }
     })();
     const consentCookies = (() => {
@@ -89,10 +96,14 @@ export const ez_consent = (() => {
         await ui.injectHtmlAsync(options);
         ui.injectCss();
         ui.showElement();
-        ui.onClick(() => {
+        const setCookieAndDestroy = () => {
             consentCookies.setCookie();
             ui.delete();
-        });
+        }
+        ui.onOkButtonClick(setCookieAndDestroy);
+        if(options.more_button_gives_consent) {
+            ui.onReadMoreButtonClick(setCookieAndDestroy);
+        }
     }
 
     function shouldShowBanner(options) {
@@ -107,6 +118,7 @@ export const ez_consent = (() => {
     }
 
     function fillDefaults(options) {
+        const isBoolean = val => 'boolean' === typeof val;
         options = options || {};
         options.privacy_url = options.privacy_url || "/privacy";
         options.texts = options.texts || {};
@@ -115,6 +127,7 @@ export const ez_consent = (() => {
         options.texts.buttons.more = options.texts.buttons.more || "More";
         options.texts.buttons.ok = options.texts.buttons.ok || "OK";
         options.target_attribute = options.target_attribute || "_blank";
+        options.more_button_gives_consent = isBoolean(options.more_button_gives_consent) ? options.more_button_gives_consent : true;
         return options;
     }
 
