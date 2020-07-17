@@ -7,9 +7,7 @@ on:
 
 jobs:
   bump-version-and-release:
-    if: > # Push => Ensure only changes from master. PR => to not trigger when closing PR without merging
-      (github.event_name == 'push' && github.event.base_ref == 'refs/heads/master')
-      || github.event.pull_request.merged == true 
+    if: github.event.base_ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - 
