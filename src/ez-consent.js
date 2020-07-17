@@ -1,4 +1,20 @@
 export const ez_consent = (() => {
+    const defaults = {
+        is_always_visible: false,
+        privacy_url: "/privacy",
+        more_button: {
+            target_attribute : "_blank",
+            is_consenting: true
+        },
+        texts: {
+          main: "This website uses cookies & similar.",
+          buttons:
+          {
+            ok: "ok",
+            more: "more"
+          }
+        }
+    }
     const ui = (() => {
         const cssClassNames = {
             root: "cookie-consent",
@@ -26,7 +42,7 @@ export const ez_consent = (() => {
                 .replace("{more}", options.texts.buttons.more)
                 .replace("{ok}", options.texts.buttons.ok)
                 .replace("{privacy_url}", options.privacy_url)
-                .replace("{target_attribute}", options.target_attribute);
+                .replace("{target_attribute}", options.more_button.target_attribute);
         }
         function getElements() {
             return {
@@ -91,7 +107,6 @@ export const ez_consent = (() => {
             setCookie: setCookie
         }
     })();
-
     async function initializeUiAsync(options) {
         await ui.injectHtmlAsync(options);
         ui.injectCss();
@@ -101,13 +116,13 @@ export const ez_consent = (() => {
             ui.delete();
         }
         ui.onOkButtonClick(setCookieAndDestroy);
-        if(options.more_button_gives_consent) {
+        if(options.more_button.is_consenting) {
             ui.onReadMoreButtonClick(setCookieAndDestroy);
         }
     }
-
     function shouldShowBanner(options) {
-        if(options.always_show) {
+        if(options.is_always_visible ||
+            options.always_show /* for backwards compatibility in 1.X.X */) {
             return true;
         }
         const queryParamToShow = "force-consent";
@@ -116,28 +131,31 @@ export const ez_consent = (() => {
         }
         return !consentCookies.getCookie();
     }
-
     function fillDefaults(options) {
-        const isBoolean = val => 'boolean' === typeof val;
-        options = options || {};
-        options.privacy_url = options.privacy_url || "/privacy";
-        options.texts = options.texts || {};
-        options.texts.main = options.texts.main || "This website uses cookies & similar.";
-        options.texts.buttons = options.texts.buttons || {};
-        options.texts.buttons.more = options.texts.buttons.more || "More";
-        options.texts.buttons.ok = options.texts.buttons.ok || "OK";
-        options.target_attribute = options.target_attribute || "_blank";
-        options.more_button_gives_consent = isBoolean(options.more_button_gives_consent) ? options.more_button_gives_consent : true;
-        return options;
+        return objectAssignRecursively(defaults, options);
+        function objectAssignRecursively(target, ...sources) {
+            // Immplemented because Object.assign does not assign nested objects
+            // options = {...defaults, ...options} works but it's not supported in older JS:
+            //      not polyfilled by closure compiler
+            //      babel-plugin-proposal-object-rest-spread just runs Object.assign that does not work with nested objects
+            sources.forEach(source => {
+                Object.keys(source).forEach(key => {
+                    const sourceValue = source[key]
+                    const targetValue = target[key]
+                    target[key] = targetValue && sourceValue && typeof targetValue === 'object' && typeof sourceValue === 'object'
+                        ? objectAssignRecursively(targetValue, sourceValue)
+                        : sourceValue
+                })
+            })
+            return target
+        }
     }
-
     async function initializeAsync(options) {
         options = fillDefaults(options);
         if (shouldShowBanner(options)) {
             await initializeUiAsync(options);
         }
     }
-
     return {
         init: (options) => initializeAsync(options)
     }
