@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1 (2020-07-20)
+
+* fixed ci-cd publishing older version | [commit](https://github.com/undergroundwires/ez-consent/commit/93e982db2fef6017146cc144d4ec605b432a83f9)
+* fixed missing shared css class to buttons (#4) | [commit](https://github.com/undergroundwires/ez-consent/commit/370afaf8255187d8188b501e7e654da0640d577c)
+
+[compare](https://github.com/undergroundwires/ez-consent/compare/1.2.0...1.2.1)
+
 ## 1.2.0 (2020-07-17)
 
 * fixed main path for node `require` support | [commit](https://github.com/undergroundwires/ez-consent/commit/b17e0970b22296d3dfcba4296e3351f96c0622d3)
