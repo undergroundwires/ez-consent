@@ -29,8 +29,8 @@ export const ez_consent = (() => {
             <div class="${cssClassNames.root} ${cssClassNames.hide}">
                 <div class="cookie-consent__text">{main}</div>
                 <div class="cookie-consent__buttons">
-                    <div class="${cssClassNames.button} ${cssClassNames.buttons.read_more}"><a href="{privacy_url}" target="{target_attribute}">{more}</a></div>
-                    <div class="${cssClassNames.button} ${cssClassNames.buttons.ok}">{ok}</div>
+                    <div class="${cssClassNames.buttons.shared} ${cssClassNames.buttons.read_more}"><a href="{privacy_url}" target="{target_attribute}">{more}</a></div>
+                    <div class="${cssClassNames.buttons.shared} ${cssClassNames.buttons.ok}">{ok}</div>
                 </div>
             </div>
         `;
