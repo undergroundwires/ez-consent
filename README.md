@@ -32,7 +32,7 @@
 It's the simplest way. Just add it to your page:
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ez-consent@1.2.1/dist/ez-consent.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/ez-consent.min.js"></script>
 ```
 
 #### Option B: Install
@@ -112,7 +112,7 @@ You can choose one of the following existing theme to get going:
 [Source file](./src/themes/box-bottom-left.css) | [See it live](https://cloudarchitecture.io/?force-consent) | [Preview on CodePen](https://codepen.io/undergroundwires/pen/qBdzmyj)
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1.2.1/dist/themes/box-bottom-left.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/themes/box-bottom-left.min.css">
 ```
 
 ##### subtle-bottom-right.css
@@ -123,7 +123,7 @@ You can choose one of the following existing theme to get going:
 [Source file](./src/themes/subtle-bottom-right.css) | [See it live](https://erkinekici.com/?force-consent) | [Preview on CodePen](https://codepen.io/undergroundwires/pen/MWwMmqw)
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1.2.1/dist/themes/subtle-bottom-right.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/themes/subtle-bottom-right.min.css">
 ```
 
 #### Custom themes
