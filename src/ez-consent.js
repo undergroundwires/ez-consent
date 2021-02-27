@@ -132,7 +132,7 @@ export const ez_consent = (() => {
         return !consentCookies.getCookie();
     }
     function fillDefaults(options) {
-        return objectAssignRecursively(defaults, options);
+        return objectAssignRecursively(defaults, options || {});
         function objectAssignRecursively(target, ...sources) {
             // Immplemented because Object.assign does not assign nested objects
             // options = {...defaults, ...options} works but it's not supported in older JS:
