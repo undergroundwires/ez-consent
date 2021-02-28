@@ -6,7 +6,47 @@ on:
 
 jobs:
 
-  build:
+  distribute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master # otherwise it defaults to the version tag missing bump commit
+          fetch-depth: 0 # fetch all history
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+      - name: Clear dist folder
+        run: rm -rfv dist/
+      - name: Compile
+        run: npm run compile
+      - name: Amend dist folder to the commit
+        run: |-
+          if [[ -z $(git status -s) ]]; then
+            echo 'There are no changes in the distribution (dist folder)'
+            exit 0
+          fi
+
+          lastCommitSha=$(git rev-parse HEAD)
+          bumpCommitSha=$(git rev-list "${{ github.event.release.tag_name }}"..master | tail -1)
+          if [ "$lastCommitSha" != "$bumpCommitSha" ]; then
+              echo "Last commit ($lastCommitSha) is not same as ($bumpCommitSha)."
+              echo "Exiting as amending to the commit may have side effects"
+              exit 1
+          fi
+
+          git config user.name "$(git log -1 --pretty=format:'%an')" || exit 1
+          git config user.email "$(git log -1 --pretty=format:'%ae')" || exit 1
+          git add 'dist/' || exit 1
+          git commit --amend --no-edit || exit 1
+          git push -f || exit 1
+
+  create-package:
+    needs: distribute
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,12 +55,6 @@ jobs:
           fetch-depth: 0 # fetch all history
       - name: Checkout to bump commit
         run: git checkout "$(git rev-list "${{ github.event.release.tag_name }}"..master | tail -1)"
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - run: npm ci
-      - run: npm test
-      - run: npm run compile
       - run: |
           mkdir "../artifact"
           cp -r . "../artifact"
@@ -32,8 +66,8 @@ jobs:
           name: package
           path: ../artifact
 
-  publish-npm:
-    needs: build
+  publish-package:
+    needs: create-package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v1
