@@ -24,16 +24,16 @@
   },
   "homepage": "https://github.com/undergroundwires/ez-consent#readme",
   "devDependencies": {
-    "@babel/core": "^7.10.5",
+    "@babel/core": "^7.13.8",
     "babel-plugin-remove-import-export": "^1.1.1",
-    "clean-css": "^4.2.3",
+    "clean-css": "^5.1.0",
     "csslint": "^1.0.5",
     "google-closure-compiler": "^20200628.0.0",
     "lynt": "^0.5.5",
-    "markdownlint-cli": "^0.23.2",
-    "remark-cli": "^8.0.0",
-    "remark-lint-no-dead-urls": "^1.0.2",
-    "remark-preset-lint-consistent": "^3.0.1",
+    "markdownlint-cli": "^0.26.0",
+    "remark-cli": "^9.0.0",
+    "remark-lint-no-dead-urls": "^1.1.0",
+    "remark-preset-lint-consistent": "^4.0.0",
     "remark-validate-links": "^10.0.2"
   },
   "dependencies": {}
