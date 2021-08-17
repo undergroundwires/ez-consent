@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "node compile.js",
     "test": "echo \"No test specified\"",
-    "lint-js": "lynt --env \"browser\"",
+    "lint-js": "eslint .",
     "lint-css": "find \"./src\" -name \"*.css\" | xargs csslint --ignore=\"order-alphabetical\"",
     "lint-md": "markdownlint **/*.md --ignore node_modules",
     "lint-md-urls-relative": "remark . --frail --use remark-validate-links",
@@ -23,13 +23,17 @@
     "url": "https://github.com/undergroundwires/ez-consent/issues"
   },
   "homepage": "https://github.com/undergroundwires/ez-consent#readme",
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.15.0",
-    "babel-plugin-remove-import-export": "^1.1.1",
     "clean-css": "^5.1.5",
+    "google-closure-compiler": "^20200719.0.0"
+  },
+  "devDependencies": {
+    "babel-plugin-remove-import-export": "^1.1.1",
     "csslint": "^1.0.5",
-    "google-closure-compiler": "^20200719.0.0",
-    "lynt": "^0.5.5",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.0",
     "markdownlint-cli": "^0.28.1",
     "remark-cli": "^10.0.0",
     "remark-lint-no-dead-urls": "^1.1.0",

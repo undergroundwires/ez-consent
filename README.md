@@ -136,7 +136,7 @@ You're welcome to contribute your theme to the project in [`./src/themes`](./src
 
 ## Distributed files
 
-The repository and deployed packages includes a [`dist/`](./dist) folder that adds polyfills to the files and distributes them as:
+The repository and deployed packages includes a `dist/` folder that adds polyfills to the files and distributes them as:
 
 - minified (`.min.js`, `.min.css`) files for production usage
 - non-minified (`.js`, `.css`) files for debugging
