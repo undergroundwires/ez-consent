@@ -3,7 +3,7 @@
 const fs = require('fs');
 const babel = require('@babel/core');
 const path = require('path');
-const ClosureCompiler = require('google-closure-compiler').jsCompiler;
+const ClosureCompiler = require('google-closure-compiler').compiler;
 const CleanCSS = require('clean-css');
 
 const outputFolder = 'dist';
