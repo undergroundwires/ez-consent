@@ -17,7 +17,9 @@
 - Very lightweight with no dependencies ✔️
 - Single line to get going ✔️
 
-[Live example 1](https://cloudarchitecture.io/?force-consent), [Live example 2](https://erkinekici.com/?force-consent), [CodePen examples](https://codepen.io/collection/XRjMGP)
+[Live example 1](https://privacylearn.com/?force-consent)
+[Live example 2](https://erkinekici.com/?force-consent)
+[CodePen examples](https://codepen.io/collection/XRjMGP)
 
 ## Usage
 
