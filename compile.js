@@ -10,21 +10,25 @@ const outputFolder = 'dist';
 const inputFile = './src/ez-consent.js';
 const cssFolder = './src/themes/';
 
-(async () => {
-  await deleteFolderRecursive(outputFolder);
-  await fs.promises.mkdir(outputFolder, { recursive: true });
-  const noModulesCode = (await babel.transformFileAsync(inputFile, {
-    plugins: ['remove-import-export'],
-  })).code;
-  await Promise.all([
-    compile(noModulesCode, path.join(outputFolder, path.basename(inputFile))),
-    compile(noModulesCode, path.join(outputFolder, `${removeExtension(path.basename(inputFile))}.min.js`), true),
-    minifyCss(cssFolder, path.join(outputFolder, 'themes')),
-  ]);
-})().catch((err) => {
-  console.error(err);
-  process.exit(-1);
-});
+main();
+
+async function main() {
+  try {
+    await deleteFolderRecursive(outputFolder);
+    await fs.promises.mkdir(outputFolder, { recursive: true });
+    const noModulesCode = (await babel.transformFileAsync(inputFile, {
+      plugins: ['remove-import-export'],
+    })).code;
+    await Promise.all([
+      compile(noModulesCode, path.join(outputFolder, path.basename(inputFile))),
+      compile(noModulesCode, path.join(outputFolder, `${removeExtension(path.basename(inputFile))}.min.js`), true),
+      minifyCss(cssFolder, path.join(outputFolder, 'themes')),
+    ]);
+  } catch (err) {
+    console.error(err);
+    process.exit(-1);
+  }
+}
 
 async function minifyCss(srcDir, targetDir) {
   const files = await fs.promises.readdir(srcDir);
