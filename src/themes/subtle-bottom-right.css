@@ -1,49 +1,61 @@
+:root {
+    --cookie-consent-spacing-large      : calc(var(--cookie-consent-spacing-medium) * 1.75);
+    --cookie-consent-spacing-medium     : 0.5rem;
+    --cookie-consent-spacing-small      : calc(var(--cookie-consent-spacing-medium) / 2);
+
+    --cookie-consent-color-primary      : black;
+    --cookie-consent-color-secondary    : #a9a9b3;
+}
+
 .cookie-consent {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    position: fixed;
-    /* Ensure nothing overflows on page or flex + fixed position does not work. */
-    padding: 0.2em;
+    position: fixed; /* Ensure nothing overflows on page or flex + fixed position does not work. */
 
-    bottom: 0.75%;
-    right: 0.5%;
+    bottom: 0;
+    right: 0;
+
+    margin: var(--cookie-consent-spacing-small);
+    padding: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-medium);
+    column-gap: var(--cookie-consent-spacing-large);
+    row-gap: var(--cookie-consent-spacing-small);
 
     background-color: inherit;
     border-radius: 10px;
 }
 
 .cookie-consent__text {
-    padding-right: 0.6em;
-    border-right: 1px solid #a9a9b3;
+    padding-inline-end: var(--cookie-consent-spacing-large);
+    border-inline-end: 1px solid var(--cookie-consent-color-secondary);
 }
 
 .cookie-consent__buttons {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     text-align: center;
     align-items: center;
-
-    padding-left: 0.6em;
+    column-gap: var(--cookie-consent-spacing-large);
+    row-gap: var(--cookie-consent-spacing-small);
+    flex-wrap: wrap;
 }
 
 .cookie-consent__buttons-button {
     cursor: pointer;
     border-radius: 3px;
-    padding: 0.5em;
 }
 
 .cookie-consent__buttons__close {
-    background: #a9a9b3;
-    color: black;
-    padding-left: 1em;
-    padding-right: 1em;
+    background: var(--cookie-consent-color-secondary);
+    color: var(--cookie-consent-color-primary);
+
+    padding-block: var(--cookie-consent-spacing-small);     /* Vertical (top/bottom) */
+    padding-inline: var(--cookie-consent-spacing-medium);   /* Horizontal (left/right) */
 }
 
 .cookie-consent__buttons__read-more>a {
-    margin-right: 1em;
     color: inherit;
     text-decoration: underline;
 }
