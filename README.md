@@ -92,9 +92,18 @@ ez_consent.init(
       buttons:
       {
         ok: "ok",                   // OK button to hide the text, default: "ok"
-        more: "more"                // More button that shows the privacy policy, default "more"
+        more: "more"                // More/accept button that shows the privacy policy, default "more"
       }
-    }
+    },
+    css_classes: {                  // CSS class name overrides
+      container: 'container',       // Main container element, default: "cookie-consent"
+      message_text: 'mainText',     // Main message text container, default: "cookie-consent__text"
+      buttons: {
+        wrapper: 'buttonsWrapper',  // Button container, default: "cookie-consent__buttons"
+        more: 'moreButton',         // More info button, default: "cookie-consent__buttons-button cookie-consent__buttons__read-more"
+        ok: 'okButton',             // More/accept button, default: "cookie-consent__buttons-button cookie-consent__buttons__close"
+      },
+    },
   });
 ```
 

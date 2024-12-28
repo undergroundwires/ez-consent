@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export, no-restricted-globals */
 
 export const ez_consent = (() => { // eslint-disable-line camelcase
-  const defaults = {
+  const defaultOptions = {
     is_always_visible: false,
     privacy_url: '/privacy',
     more_button: {
@@ -16,42 +16,60 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
         more: 'more',
       },
     },
+    css_classes: {
+      container: 'cookie-consent',
+      message_text: 'cookie-consent__text',
+      buttons: {
+        wrapper: 'cookie-consent__buttons',
+        more: 'cookie-consent__buttons-button cookie-consent__buttons__read-more',
+        ok: 'cookie-consent__buttons-button cookie-consent__buttons__close',
+      },
+    },
   };
   const ui = (() => {
-    const cssClassNames = {
-      root: 'cookie-consent',
-      hide: 'cookie-consent__hide',
-      buttons: {
-        shared: 'cookie-consent__buttons-button',
-        read_more: 'cookie-consent__buttons__read-more',
-        ok: 'cookie-consent__buttons__close',
-      },
+    const cookieConsentTemplate = `
+      <div class="{css.container} {css.hidden}">
+        <div class="{css.message_text}">{labels.main}</div>
+        <div class="{css.buttons_wrapper}">
+          <div class="{css.buttons.more}"><a href="{labels.privacy_url}" target="{target_attribute}">{labels.more}</a></div>
+          <div class="{css.buttons.ok}">{labels.ok}</div>
+        </div>
+      </div>
+    `;
+    const baseCssClassNames = {
+      container: 'cookie-consent',
+      hidden: 'cookie-consent__hide',
     };
-    const consentHtml = `
-            <div class="${cssClassNames.root} ${cssClassNames.hide}">
-                <div class="cookie-consent__text">{main}</div>
-                <div class="cookie-consent__buttons">
-                    <div class="${cssClassNames.buttons.shared} ${cssClassNames.buttons.read_more}"><a href="{privacy_url}" target="{target_attribute}">{more}</a></div>
-                    <div class="${cssClassNames.buttons.shared} ${cssClassNames.buttons.ok}">{ok}</div>
-                </div>
-            </div>
-        `;
-    const consentCss = `.cookie-consent         { z-index: 9999; }
-                            .cookie-consent__hide   { display:none !important; }`;
+    const baseCss = `
+      .${baseCssClassNames.container}   { z-index: 9999; }
+      .${baseCssClassNames.hidden}      { display:none !important; }
+    `;
     function initializeHtml(options) {
-      return consentHtml
-        .replace('{main}', options.texts.main)
-        .replace('{more}', options.texts.buttons.more)
-        .replace('{ok}', options.texts.buttons.ok)
-        .replace('{privacy_url}', options.privacy_url)
-        .replace('{target_attribute}', options.more_button.target_attribute);
+      return cookieConsentTemplate
+        .replace('{labels.main}', options.texts.main)
+        .replace('{labels.more}', options.texts.buttons.more)
+        .replace('{labels.ok}', options.texts.buttons.ok)
+        .replace('{labels.privacy_url}', options.privacy_url)
+        .replace('{target_attribute}', options.more_button.target_attribute)
+        .replace('{css.container}', `${options.css_classes.container} ${baseCssClassNames.container}`)
+        .replace('{css.hidden}', baseCssClassNames.hidden)
+        .replace('{css.message_text}', options.css_classes.message_text)
+        .replace('{css.buttons_wrapper}', options.css_classes.buttons.wrapper)
+        .replace('{css.buttons.more}', options.css_classes.buttons.more)
+        .replace('{css.buttons.ok}', options.css_classes.buttons.ok);
     }
-    function getElements() {
+    function getElements(options) {
+      const selectElementByClassNames = (classNames) => {
+        const elements = document.getElementsByClassName(classNames);
+        if (!elements.length === 0) { throw new Error(`No elements found for query: ${classNames}`); }
+        if (!elements.length > 1) { throw new Error(`Multiple elements found for query: ${classNames}`); }
+        return elements[0];
+      };
       return {
-        root: document.querySelector(`.${cssClassNames.root}`),
+        container: selectElementByClassNames(options.css_classes.container),
         buttons: {
-          read_more: document.querySelector(`.${cssClassNames.buttons.read_more}`),
-          ok: document.querySelector(`.${cssClassNames.buttons.ok}`),
+          more: selectElementByClassNames(options.css_classes.buttons.more),
+          ok: selectElementByClassNames(options.css_classes.buttons.ok),
         },
       };
     }
@@ -73,19 +91,19 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
       }),
       injectCss: () => {
         const style = document.createElement('style');
-        style.textContent = consentCss;
+        style.textContent = baseCss;
         document.head.append(style);
       },
-      showElement: () => {
-        getElements().root.classList.remove(cssClassNames.hide);
+      showElement: (options) => {
+        getElements(options).container.classList.remove(baseCssClassNames.hidden);
       },
-      delete: () => {
-        getElements().root.remove();
+      delete: (options) => {
+        getElements(options).container.remove();
       },
       onOkButtonClick:
-        (handler) => registerClickHandler(getElements().buttons.ok, handler),
+        (options, handler) => registerClickHandler(getElements(options).buttons.ok, handler),
       onReadMoreButtonClick:
-        (handler) => registerClickHandler(getElements().buttons.read_more, handler),
+        (options, handler) => registerClickHandler(getElements(options).buttons.more, handler),
     };
   })();
   const consentCookies = (() => {
@@ -117,14 +135,14 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
   async function initializeUiAsync(options) {
     await ui.injectHtmlAsync(options);
     ui.injectCss();
-    ui.showElement();
+    ui.showElement(options);
     const setCookieAndDestroy = () => {
       consentCookies.setCookie();
-      ui.delete();
+      ui.delete(options);
     };
-    ui.onOkButtonClick(setCookieAndDestroy);
+    ui.onOkButtonClick(options, setCookieAndDestroy);
     if (options.more_button.is_consenting) {
-      ui.onReadMoreButtonClick(setCookieAndDestroy);
+      ui.onReadMoreButtonClick(options, setCookieAndDestroy);
     }
   }
   function shouldShowBanner(options) {
@@ -139,7 +157,7 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
     return !consentCookies.getCookie();
   }
   function fillDefaults(options) {
-    return objectAssignRecursively(defaults, options || {});
+    return objectAssignRecursively(defaultOptions, options || {});
     function objectAssignRecursively(target, ...sources) {
       // This is implemented because `Object.assign does` not assign nested objects
       // `options = {...defaults, ...options}` works, but it is not supported in
