@@ -23,12 +23,10 @@
     "url": "https://github.com/undergroundwires/ez-consent/issues"
   },
   "homepage": "https://github.com/undergroundwires/ez-consent#readme",
-  "dependencies": {
-    "@babel/core": "^7.26.0",
-    "clean-css": "^5.3.3"
-  },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
     "babel-plugin-remove-import-export": "^1.1.1",
+    "clean-css": "^5.3.3",
     "csslint": "^1.0.5",
     "esbuild": "0.24.2",
     "eslint": "^8.2.0",
