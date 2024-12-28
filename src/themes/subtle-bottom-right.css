@@ -2,7 +2,6 @@
     --cookie-consent-spacing-large      : calc(var(--cookie-consent-spacing-medium) * 1.75);
     --cookie-consent-spacing-medium     : 0.5rem;
     --cookie-consent-spacing-small      : calc(var(--cookie-consent-spacing-medium) / 2);
-
     --cookie-consent-color-primary      : black;
     --cookie-consent-color-secondary    : #a9a9b3;
 }
@@ -13,15 +12,11 @@
     justify-content: flex-end;
     align-items: center;
     position: fixed; /* Ensure nothing overflows on page or flex + fixed position does not work. */
-
     bottom: 0;
     right: 0;
-
     margin: var(--cookie-consent-spacing-small);
     padding: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-medium);
-    column-gap: var(--cookie-consent-spacing-large);
-    row-gap: var(--cookie-consent-spacing-small);
-
+    gap: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-large);
     background-color: inherit;
     border-radius: 10px;
 }
@@ -33,13 +28,11 @@
 
 .cookie-consent__buttons {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     justify-content: center;
     text-align: center;
     align-items: center;
-    column-gap: var(--cookie-consent-spacing-large);
-    row-gap: var(--cookie-consent-spacing-small);
-    flex-wrap: wrap;
+    gap: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-large);
 }
 
 .cookie-consent__buttons-button {
@@ -50,7 +43,6 @@
 .cookie-consent__buttons__close {
     background: var(--cookie-consent-color-secondary);
     color: var(--cookie-consent-color-primary);
-
     padding-block: var(--cookie-consent-spacing-small);     /* Vertical (top/bottom) */
     padding-inline: var(--cookie-consent-spacing-medium);   /* Horizontal (left/right) */
 }
