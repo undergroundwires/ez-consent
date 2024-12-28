@@ -84,17 +84,5 @@ async function compileWithClosureAsync(code, output, options) {
 }
 
 async function deleteFolderRecursiveAsync(folderPath) {
-  if (!fs.existsSync(folderPath)) {
-    return;
-  }
-  const directoryContents = await fs.promises.readdir(folderPath);
-  await Promise.all(directoryContents.map(async (innerFilePath) => {
-    const innerPath = `${folderPath}/${innerFilePath}`;
-    if ((await fs.promises.lstat(innerPath)).isDirectory()) {
-      await deleteFolderRecursiveAsync(innerPath);
-    } else {
-      await fs.promises.unlink(innerPath);
-    }
-  }));
-  await fs.promises.rmdir(path);
+  await fs.promises.rm(folderPath, { recursive: true, force: true });
 }
