@@ -1,2 +1,9 @@
+# Development dependencies
 node_modules
+
+# Package contents - Updates automated
 dist/
+
+# draw.io back-ups
+*.bkp
+*.dtmp

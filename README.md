@@ -161,6 +161,6 @@ The repository and deployed packages include a `dist/` folder that adds polyfill
 
 CI/CD is fully automated for this repo using different Git events & GitHub actions.
 
-![ez-consent continuous integration and deployment flow](./img/gitops.png)
+![ez-consent continuous integration and deployment flow](./img/gitops.drawio.png)
 
 *[top↑](#ez-consent)*
