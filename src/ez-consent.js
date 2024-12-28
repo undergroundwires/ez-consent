@@ -63,11 +63,13 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
     return {
       injectHtmlAsync: (options) => new Promise((resolve) => {
         const html = initializeHtml(options);
-        document.addEventListener('DOMContentLoaded', // Wait until "document.body" is ready so we make sure we're first element
+        document.addEventListener(
+          'DOMContentLoaded', // Wait until "document.body" is ready so we make sure we're first element
           () => {
             document.body.insertAdjacentHTML('afterbegin', html);
             resolve();
-          });
+          },
+        );
       }),
       injectCss: () => {
         const style = document.createElement('style');
