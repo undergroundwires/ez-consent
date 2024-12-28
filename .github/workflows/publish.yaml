@@ -2,7 +2,7 @@ name: Publish
 
 on:
   release:
-    types: [created] # will be triggered when a NON-draft release is created and published.
+    types: [created] # It will be triggered when a NON-draft release is created and published.
 
 jobs:
 
@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: master # otherwise it defaults to the version tag missing bump commit
-          fetch-depth: 0 # fetch all history
+          ref: master # Otherwise it defaults to the version tag missing bump commit
+          fetch-depth: 0 # Fetch all history
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
@@ -51,8 +51,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: master # otherwise it defaults to the version tag missing bump commit
-          fetch-depth: 0 # fetch all history
+          ref: master # Otherwise it defaults to the version tag missing bump commit
+          fetch-depth: 0 # Fetch all history
       - name: Checkout to bump commit
         run: git checkout "$(git rev-list "${{ github.event.release.tag_name }}"..master | tail -1)"
       - run: |

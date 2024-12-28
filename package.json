@@ -1,7 +1,7 @@
 {
   "name": "ez-consent",
   "version": "1.2.2",
-  "description": "🍪 Minimal & vanilla JS only cookie consent banner with no dependencies.",
+  "description": "🍪 A minimal, vanilla JavaScript cookie consent banner with no dependencies.",
   "main": "src/ez-consent.js",
   "scripts": {
     "compile": "node compile.js",

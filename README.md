@@ -1,6 +1,6 @@
 # ez-consent
 
-> 🍪 Minimal & vanilla JS only cookie consent banner with no dependencies.
+> 🍪 A minimal, vanilla JavaScript cookie consent banner with no dependencies.
 
 [![](https://img.shields.io/npm/v/ez-consent)](https://www.npmjs.com/package/ez-consent)
 [![](https://data.jsdelivr.com/v1/package/npm/ez-consent/badge?style=rounded)](https://www.jsdelivr.com/package/npm/ez-consent)
@@ -15,11 +15,13 @@
 - Vanilla JavaScript only ✔️
 - It does not track you ✔️
 - Very lightweight with no dependencies ✔️
-- Single line to get going ✔️
+- Single line to get started ✔️
 
-[Live example 1](https://privacylearn.com/?force-consent)
-[Live example 2](https://erkinekici.com/?force-consent)
-[CodePen examples](https://codepen.io/collection/XRjMGP)
+Examples:
+
+- [Live example 1](https://privacylearn.com/?force-consent)
+- [Live example 2](https://erkinekici.com/?force-consent)
+- [CodePen examples](https://codepen.io/collection/XRjMGP)
 
 ## Usage
 
@@ -83,7 +85,7 @@ ez_consent.init(
     privacy_url: "/privacy",        // URL that "more" button goes to, default: "/privacy/"
     more_button: {
       target_attribute : "_blank",  // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab
-      is_consenting: true           // Determines whether clicking on 'more' button gives consent and removes the banner, default: true
+      is_consenting: true           // Controls whether clicking the 'more' button automatically gives consent and removes the banner, default: true
     },
     texts: {
       main: "We use cookies",       // The text that's shown on the banner, default: "This website uses cookies & similar."
@@ -97,7 +99,8 @@ ez_consent.init(
 ```
 
 The banner will be shown if the user has not yet agreed to read & understand the information.
-You can also force to show banner always by having `force-consent` query parameter in URL. E.g. : `test.com/fest?force-consent`
+You can force the banner to always show by including the `force-consent` query parameter in the URL.
+Example for `https://test.com/fest` page: `test.com/fest?force-consent`.
 
 *[top↑](#ez-consent)*
 
@@ -105,7 +108,7 @@ You can also force to show banner always by having `force-consent` query paramet
 
 #### Existing themes
 
-You can choose one of the following existing theme to get going:
+You can choose one of the following existing theme to begin:
 
 ##### box-bottom-left.css
 
@@ -138,7 +141,7 @@ You're welcome to contribute your theme to the project in [`./src/themes`](./src
 
 ## Distributed files
 
-The repository and deployed packages includes a `dist/` folder that adds polyfills to the files and distributes them as:
+The repository and deployed packages include a `dist/` folder that adds polyfills to the files and distributes them as:
 
 - minified (`.min.js`, `.min.css`) files for production usage
 - non-minified (`.js`, `.css`) files for debugging

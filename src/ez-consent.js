@@ -64,7 +64,7 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
       injectHtmlAsync: (options) => new Promise((resolve) => {
         const html = initializeHtml(options);
         document.addEventListener(
-          'DOMContentLoaded', // Wait until "document.body" is ready so we make sure we're first element
+          'DOMContentLoaded', // Wait until "document.body" is ready to ensure this is the first element inserted
           () => {
             document.body.insertAdjacentHTML('afterbegin', html);
             resolve();
@@ -141,10 +141,11 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
   function fillDefaults(options) {
     return objectAssignRecursively(defaults, options || {});
     function objectAssignRecursively(target, ...sources) {
-      // Implemented because Object.assign does not assign nested objects
-      // options = {...defaults, ...options} works but it's not supported in older JS:
+      // This is implemented because `Object.assign does` not assign nested objects
+      // `options = {...defaults, ...options}` works, but it is not supported in
+      // older JavaScript versions:
       //  not polyfilled by closure compiler
-      //  babel-plugin-proposal-object-rest-spread just runs Object.assign which
+      //  `babel-plugin-proposal-object-rest-spread` just runs `Object.assign` which
       //    does not work with nested objects
       sources.forEach((source) => {
         Object.keys(source).forEach((key) => {
