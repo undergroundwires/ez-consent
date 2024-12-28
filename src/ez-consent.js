@@ -27,15 +27,6 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
     },
   };
   const ui = (() => {
-    const cookieConsentTemplate = `
-      <div class="{css.container} {css.hidden}">
-        <div class="{css.message_text}">{labels.main}</div>
-        <div class="{css.buttons_wrapper}">
-          <div class="{css.buttons.more}"><a href="{labels.privacy_url}" target="{target_attribute}">{labels.more}</a></div>
-          <div class="{css.buttons.ok}">{labels.ok}</div>
-        </div>
-      </div>
-    `;
     const baseCssClassNames = {
       container: 'cookie-consent',
       hidden: 'cookie-consent__hide',
@@ -45,18 +36,17 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
       .${baseCssClassNames.hidden}      { display:none !important; }
     `;
     function initializeHtml(options) {
-      return cookieConsentTemplate
-        .replace('{labels.main}', options.texts.main)
-        .replace('{labels.more}', options.texts.buttons.more)
-        .replace('{labels.ok}', options.texts.buttons.ok)
-        .replace('{labels.privacy_url}', options.privacy_url)
-        .replace('{target_attribute}', options.more_button.target_attribute)
-        .replace('{css.container}', `${options.css_classes.container} ${baseCssClassNames.container}`)
-        .replace('{css.hidden}', baseCssClassNames.hidden)
-        .replace('{css.message_text}', options.css_classes.message_text)
-        .replace('{css.buttons_wrapper}', options.css_classes.buttons.wrapper)
-        .replace('{css.buttons.more}', options.css_classes.buttons.more)
-        .replace('{css.buttons.ok}', options.css_classes.buttons.ok);
+      return `
+        <div class="${options.css_classes.container} ${baseCssClassNames.container} ${baseCssClassNames.hidden}">
+          <div class="${options.css_classes.message_text}">${options.texts.main}</div>
+          <div class="${options.css_classes.buttons.wrapper}">
+            <div class="${options.css_classes.buttons.more}">
+              <a href="${options.privacy_url}" target="${options.more_button.target_attribute}">${options.texts.buttons.more}</a>
+            </div>
+            <div class="${options.css_classes.buttons.ok}">${options.texts.buttons.ok}</div>
+          </div>
+        </div>
+      `;
     }
     function getElements(options) {
       const selectElementByClassNames = (classNames) => {
