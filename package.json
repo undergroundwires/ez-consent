@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/undergroundwires/ez-consent.git"
   },
-  "author": "npm@erkinekici.com",
+  "author": "git@undergroundwires.dev",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/undergroundwires/ez-consent/issues"
