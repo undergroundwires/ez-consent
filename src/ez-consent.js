@@ -11,10 +11,10 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
     texts: {
       main: 'This website uses cookies & similar.',
       buttons:
-          {
-            ok: 'ok',
-            more: 'more',
-          },
+      {
+        ok: 'ok',
+        more: 'more',
+      },
     },
   };
   const ui = (() => {
@@ -129,7 +129,7 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
   }
   function shouldShowBanner(options) {
     if (options.is_always_visible
-            || options.always_show /* for backwards compatibility in 1.X.X */) {
+      || options.always_show /* for backwards compatibility in 1.X.X */) {
       return true;
     }
     const queryParamToShow = 'force-consent';
