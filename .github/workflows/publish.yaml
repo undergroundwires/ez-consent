@@ -41,7 +41,7 @@ jobs:
 
           git config user.name "$(git log -1 --pretty=format:'%an')" || exit 1
           git config user.email "$(git log -1 --pretty=format:'%ae')" || exit 1
-          git add 'dist/' || exit 1
+          git add 'dist/' --force || exit 1
           git commit --amend --no-edit || exit 1
           git push -f || exit 1
 
