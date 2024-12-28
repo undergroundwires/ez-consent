@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export, no-restricted-globals */
 
 export const ez_consent = (() => { // eslint-disable-line camelcase
+  const mergeCssClassNames = (...classNames) => classNames.join(' ');
   const defaultOptions = {
     is_always_visible: false,
     privacy_url: '/privacy',
@@ -21,15 +22,28 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
       message_text: 'cookie-consent__text',
       buttons: {
         wrapper: 'cookie-consent__buttons',
-        more: 'cookie-consent__buttons-button cookie-consent__buttons__read-more',
-        ok: 'cookie-consent__buttons-button cookie-consent__buttons__close',
+        more: mergeCssClassNames(
+          'cookie-consent__button',
+          'cookie-consent__button--more',
+          'cookie-consent__buttons-button', // Legacy (for backwards compatibility with ≤ 1.2.X)
+          'cookie-consent__buttons__read-more', // Legacy (for backwards compatibility with ≤ 1.2.X)
+        ),
+        ok: mergeCssClassNames(
+          'cookie-consent__button',
+          'cookie-consent__button--ok',
+          'cookie-consent__buttons-button', // Legacy (for backwards compatibility with ≤ 1.2.X)
+          'cookie-consent__buttons__close', // Legacy (for backwards compatibility with ≤ 1.2.X)
+        ),
       },
     },
   };
   const ui = (() => {
     const baseCssClassNames = {
       container: 'cookie-consent',
-      hidden: 'cookie-consent__hide',
+      hidden: mergeCssClassNames(
+        'cookie-consent--hidden',
+        'cookie-consent__hide', // Legacy (for backwards compatibility with ≤ 1.2.X)
+      ),
     };
     const baseCss = `
       .${baseCssClassNames.container}   { z-index: 9999; }
@@ -85,7 +99,9 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
         document.head.append(style);
       },
       showElement: (options) => {
-        getElements(options).container.classList.remove(baseCssClassNames.hidden);
+        getElements(options).container.classList.remove(
+          ...baseCssClassNames.hidden.split(' '),
+        );
       },
       delete: (options) => {
         getElements(options).container.remove();

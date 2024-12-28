@@ -100,8 +100,8 @@ ez_consent.init(
       message_text: 'mainText',     // Main message text container, default: "cookie-consent__text"
       buttons: {
         wrapper: 'buttonsWrapper',  // Button container, default: "cookie-consent__buttons"
-        more: 'moreButton',         // More info button, default: "cookie-consent__buttons-button cookie-consent__buttons__read-more"
-        ok: 'okButton',             // More/accept button, default: "cookie-consent__buttons-button cookie-consent__buttons__close"
+        more: 'moreButton',         // More info button, default: "cookie-consent__button cookie-consent__button--more"
+        ok: 'okButton',             // More/accept button, default: "cookie-consent__button cookie-consent__button--ok"
       },
     },
   });

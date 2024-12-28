@@ -35,19 +35,19 @@
     gap: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-large);
 }
 
-.cookie-consent__buttons-button {
+.cookie-consent__button {
     cursor: pointer;
     border-radius: 3px;
 }
 
-.cookie-consent__buttons__close {
+.cookie-consent__button--ok {
     background: var(--cookie-consent-color-secondary);
     color: var(--cookie-consent-color-primary);
     padding-block: var(--cookie-consent-spacing-small);     /* Vertical (top/bottom) */
     padding-inline: var(--cookie-consent-spacing-medium);   /* Horizontal (left/right) */
 }
 
-.cookie-consent__buttons__read-more>a {
+.cookie-consent__button--more>a {
     color: inherit;
     text-decoration: underline;
 }

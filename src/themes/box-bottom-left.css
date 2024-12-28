@@ -29,20 +29,20 @@
         var(--cookie-consent-spacing-medium);
 }
 
-.cookie-consent__buttons-button {
+.cookie-consent__button {
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.cookie-consent__buttons__close {
+.cookie-consent__button--ok {
     background: var(--cookie-consent-color-primary);
     color: var(--cookie-consent-color-secondary);
     padding-inline: var(--cookie-consent-spacing-medium);   /* Horizontal (left/right) */
     padding-block: var(--cookie-consent-spacing-small);     /* Vertical (top/bottom) */
 }
 
-.cookie-consent__buttons__read-more>a {
+.cookie-consent__button--more>a {
     color: var(--cookie-consent-color-primary);
 }
