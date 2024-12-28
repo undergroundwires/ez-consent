@@ -25,12 +25,12 @@
   "homepage": "https://github.com/undergroundwires/ez-consent#readme",
   "dependencies": {
     "@babel/core": "^7.26.0",
-    "clean-css": "^5.3.3",
-    "google-closure-compiler": "^20240317.0.0"
+    "clean-css": "^5.3.3"
   },
   "devDependencies": {
     "babel-plugin-remove-import-export": "^1.1.1",
     "csslint": "^1.0.5",
+    "esbuild": "0.24.2",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.31.0",

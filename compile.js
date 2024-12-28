@@ -3,7 +3,7 @@
 const fs = require('fs');
 const babel = require('@babel/core');
 const path = require('path');
-const ClosureCompiler = require('google-closure-compiler').compiler;
+const esbuild = require('esbuild');
 const CleanCSS = require('clean-css');
 
 const outputFolder = 'dist';
@@ -17,16 +17,8 @@ const cssFolder = './src/themes/';
     plugins: ['remove-import-export'],
   })).code;
   await Promise.all([
-    compileWithClosureAsync(noModulesCode, path.join(outputFolder, path.basename(inputFile)), {
-      compilation_level: 'SIMPLE',
-      formatting: 'PRETTY_PRINT',
-      env: 'BROWSER',
-      debug: true,
-    }),
-    compileWithClosureAsync(noModulesCode, path.join(outputFolder, `${removeExtension(path.basename(inputFile))}.min.js`), {
-      compilation_level: 'SIMPLE',
-      env: 'BROWSER',
-    }),
+    compileAsync(noModulesCode, path.join(outputFolder, path.basename(inputFile))),
+    compileAsync(noModulesCode, path.join(outputFolder, `${removeExtension(path.basename(inputFile))}.min.js`), true),
     minifyCssAsync(cssFolder, path.join(outputFolder, 'themes')),
   ]);
 })().catch((err) => {
@@ -61,26 +53,21 @@ function removeExtension(str) {
   return str.slice(0, -path.extname(str).length);
 }
 
-async function compileWithClosureAsync(code, output, options) {
-  return new Promise((resolve, reject) => {
-    new ClosureCompiler(options).run([{
-      path: './',
-      src: code,
-      sourceMap: null,
-    }], async (exitCode, stdOut, stdErr) => {
-      if (stdErr) {
-        console.error('[ERROR] Google Closure', stdErr);
-      }
-      if (exitCode !== 0) {
-        reject(new Error(`Unexpected exit code : ${exitCode}`));
-      }
-      await Promise.all(stdOut.map(async (fileResult) => {
-        console.log(`JS compiled to "${output}", with options: ${JSON.stringify(options)}`);
-        await fs.promises.writeFile(output, fileResult.src);
-      }));
-      resolve();
+async function compileAsync(codeString, targetPath, minifyCode = false) {
+  try {
+    await esbuild.build({
+      stdin: {
+        contents: codeString,
+        loader: 'js',
+      },
+      outfile: targetPath,
+      minify: minifyCode,
     });
-  });
+    console.log(`JavaScript compiled to "${targetPath}" (${minifyCode ? 'minified' : 'not minified'})`);
+  } catch (error) {
+    console.error('[ERROR] esbuild', error);
+    process.exit(1);
+  }
 }
 
 async function deleteFolderRecursiveAsync(folderPath) {
