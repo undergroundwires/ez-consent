@@ -26,7 +26,7 @@ jobs:
         run: npm run compile
       - name: Amend dist folder to the commit
         run: |-
-          if [[ -z $(git status -s) ]]; then
+          if [[ -z $(git status -s dist/ --ignored) ]]; then
             echo 'There are no changes in the distribution (dist folder)'
             exit 0
           fi
