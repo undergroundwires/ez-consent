@@ -25,38 +25,63 @@ Examples:
 
 ## Usage
 
-1. [Import](#1-import-the-script)
-2. [Initialize](#2-initialize-the-script)
-3. [Style](#3-style)
+### Quick Start: CDN
 
-### 1. Import the script
-
-#### Option A: CDN
-
-It's the simplest way. Just add it to your page:
+The simplest way to get started is to add it to your page:
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/ez-consent.min.js"></script>
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/ez-consent.min.js"
+    defer
+    async
+    onload="
+        ez_consent.init({
+            privacy_url: '/privacy',
+            texts: {
+                buttons: {
+                    ok: 'OK',
+                    more: 'More',
+                },
+            },
+        });
+    "
+></script>
 ```
 
-#### Option B: Install
+See [Initialize the script](#2-initialize) for additional options and alternative ways.
+
+*[top↑](#ez-consent)*
+
+### Advanced Usage
+
+1. [Import](#1-import)
+2. [Initialize](#2-initialize)
+3. [Style](#3-style) (optional)
+
+#### 1. Import
+
+Here are some examples how you can install the script:
 
 - Using NPM: `npm install ez-consent --save`
 - Or using yarn: `yarn add ez-consent`
-- Or as a git submodule (not recommended):
+- Using git submodule (not recommended):
   - Go to the folder you wish to have the repository
   - Run `git submodule add https://github.com/undergroundwires/safe-email`
 
 Add it to your page:
 
 ```html
-<script type="text/javascript" src="/node_modules/ez-consent/dist/ez-consent.min.js"></script>
+<script
+    type="text/javascript"
+    src="/node_modules/ez-consent/dist/ez-consent.min.js"
+></script>
 ```
 
 Or you can import `ez_consent` as a module:
 
 ```html
-<script type="module">
+<script type="module" async defer>
   import { ez_consent } from './ez-consent/src/ez-consent.js'; // /node_modules/ez-consent/ez-consent.js ...
   ez_consent.init();
 </script>
@@ -70,13 +95,39 @@ import { ez_consent } from "./node_modules/ez-consent/src/ez-consent"
 
 *[top↑](#ez-consent)*
 
-### 2. Initialize the script
+#### 2. Initialize
+
+When importing a script using the `<script>` element, it's recommended to use the `onload` attribute to initialize it.
+This approach allows you to keep both `async` and `defer` attributes, which improve webpage performance and user
+experience by optimizing script loading. This can help your pages rank better in search engines.
+
+```html
+<script
+    type="text/javascript"
+    src="/node_modules/ez-consent/dist/ez-consent.min.js"
+    async
+    defer
+    onload="
+        ez_consent.init({
+            privacy_url: '/privacy',
+            texts: {
+                buttons: {
+                    ok: 'OK',
+                    more: 'More',
+                },
+            },
+        });
+    "
+></script>
+```
+
+Or, you can initialize later using this snippet:
 
 ```js
 ez_consent.init();
 ```
 
-or with all optional options:
+See all options:
 
 ```js
 ez_consent.init(
@@ -113,13 +164,13 @@ Example for `https://test.com/fest` page: `test.com/fest?force-consent`.
 
 *[top↑](#ez-consent)*
 
-### 3. Style
+#### 3. Style
 
-#### Existing themes
+##### Existing Themes
 
-You can choose one of the following existing theme to begin:
+You can choose one of the following existing themes to begin:
 
-##### box-bottom-left.css
+###### box-bottom-left.css
 
 ![box-bottom-left](./img/themes/box-bottom-left.png)
 
@@ -129,7 +180,7 @@ You can choose one of the following existing theme to begin:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/themes/box-bottom-left.min.css">
 ```
 
-##### subtle-bottom-right.css
+###### subtle-bottom-right.css
 
 ![subtle-bottom-right](./img/themes/subtle-bottom-right-light.png)
 ![subtle-bottom-right-dark](./img/themes/subtle-bottom-right-dark.png)
@@ -140,9 +191,11 @@ You can choose one of the following existing theme to begin:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/themes/subtle-bottom-right.min.css">
 ```
 
-#### Custom themes
+##### Custom Themes
 
 Or you can create your own theme & import it. Check example themes at [existing themes](./src/themes/). [The HTML](./src/ez-consent.js#L18) uses only a few classes using [BEM](http://getbem.com/naming/) naming convention.
+
+You can also add your own class names using `css_classes` option, see [initialization](#2-initialize) for details.
 
 You're welcome to contribute your theme to the project in [`./src/themes`](./src/themes/) folder by creating a pull request 👍.
 
