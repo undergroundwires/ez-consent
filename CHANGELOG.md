@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.1 (2025-01-18)
+
+* Update diagram in docs | [be09fd7](https://github.com/undergroundwires/ez-consent/commit/be09fd71be033c755cc75facc007e141cdc297a8)
+* Improve examples for performance | [8124f57](https://github.com/undergroundwires/ez-consent/commit/8124f57a056251447d82f0963b0b07fa4b93d28e)
+* Fix dist folder not being updated | [31ebf4f](https://github.com/undergroundwires/ez-consent/commit/31ebf4fc452c9f71317947a6fe82ebed3c46f537)
+
+[compare](https://github.com/undergroundwires/ez-consent/compare/1.3.0...1.3.1)
+
 ## 1.3.0 (2024-12-28)
 
 * automate adding '/dist' folder on release | [805e1db](https://github.com/undergroundwires/ez-consent/commit/805e1db590d2673ae39a9f1a9739416037e19af1)
