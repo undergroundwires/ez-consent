@@ -32,7 +32,7 @@ The simplest way to get started is to add it to your page:
 ```html
 <script
     type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/ez-consent.min.js"
+    src="https://cdn.jsdelivr.net/npm/ez-consent@^1/dist/ez-consent.min.js"
     defer
     async
     onload="
@@ -177,7 +177,7 @@ You can choose one of the following existing themes to begin:
 [Source file](./src/themes/box-bottom-left.css) | [See it live](https://cloudarchitecture.io/?force-consent) | [Preview on CodePen](https://codepen.io/undergroundwires/pen/qBdzmyj)
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/themes/box-bottom-left.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@^1/dist/themes/box-bottom-left.min.css">
 ```
 
 ###### subtle-bottom-right.css
