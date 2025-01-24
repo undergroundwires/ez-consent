@@ -5,7 +5,6 @@ on:
     types: [created] # It will be triggered when a NON-draft release is created and published.
 
 jobs:
-
   distribute:
     runs-on: ubuntu-latest
     steps:
@@ -49,24 +48,20 @@ jobs:
     needs: distribute
     runs-on: ubuntu-latest
     steps:
-      -
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: master # Otherwise it defaults to the version tag missing bump commit
           fetch-depth: 0 # Fetch all history
-      -
-        name: Checkout to bump commit
+      - name: Checkout to bump commit
         run: git checkout "$(git rev-list "${{ github.event.release.tag_name }}"..master | tail -1)"
-      -
-        name: Create dist folder
+      - name: Create dist folder
         run: |
           mkdir "/tmp/package-dist"
           cp -r . "/tmp/package-dist"
           rm -rf "/tmp/package-dist/.git"
           rm -rf "/tmp/package-dist/.github"
           rm -rf "/tmp/package-dist/node_modules"
-      -
-        name: Upload dist folder
+      - name: Upload dist folder
         uses: actions/upload-artifact@v4
         with:
           name: npm-artifact
@@ -76,19 +71,16 @@ jobs:
     needs: create-package
     runs-on: ubuntu-latest
     steps:
-      -
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22.x
           registry-url: https://registry.npmjs.org/
-      -
-        name: Download npm artifact
+      - name: Download npm artifact
         uses: actions/download-artifact@v4
         with:
           name: npm-artifact
           path: npm-dist
-      -
-        name: Publish npm package
+      - name: Publish npm package
         run: cd npm-dist && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -1,6 +1,6 @@
-/* eslint-disable import/prefer-default-export, no-restricted-globals */
+/* global document, location */
 
-export const ez_consent = (() => { // eslint-disable-line camelcase
+export const ez_consent = (() => {
   const mergeCssClassNames = (...classNames) => classNames.join(' ');
   const defaultOptions = {
     is_always_visible: false,
@@ -11,8 +11,7 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
     },
     texts: {
       main: 'This website uses cookies & similar.',
-      buttons:
-      {
+      buttons: {
         ok: 'ok',
         more: 'more',
       },
@@ -65,8 +64,12 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
     function getElements(options) {
       const selectElementByClassNames = (classNames) => {
         const elements = document.getElementsByClassName(classNames);
-        if (!elements.length === 0) { throw new Error(`No elements found for query: ${classNames}`); }
-        if (!elements.length > 1) { throw new Error(`Multiple elements found for query: ${classNames}`); }
+        if (!elements.length === 0) {
+          throw new Error(`No elements found for query: ${classNames}`);
+        }
+        if (!elements.length > 1) {
+          throw new Error(`Multiple elements found for query: ${classNames}`);
+        }
         return elements[0];
       };
       return {
@@ -83,33 +86,32 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
       });
     }
     return {
-      injectHtmlAsync: (options) => new Promise((resolve) => {
-        const html = initializeHtml(options);
-        document.addEventListener(
-          'DOMContentLoaded', // Wait until "document.body" is ready to ensure this is the first element inserted
-          () => {
-            document.body.insertAdjacentHTML('afterbegin', html);
-            resolve();
-          },
-        );
-      }),
+      injectHtmlAsync: (options) =>
+        new Promise((resolve) => {
+          const html = initializeHtml(options);
+          document.addEventListener(
+            'DOMContentLoaded', // Wait until "document.body" is ready to ensure this is the first element inserted
+            () => {
+              document.body.insertAdjacentHTML('afterbegin', html);
+              resolve();
+            },
+          );
+        }),
       injectCss: () => {
         const style = document.createElement('style');
         style.textContent = baseCss;
         document.head.append(style);
       },
       showElement: (options) => {
-        getElements(options).container.classList.remove(
-          ...baseCssClassNames.hidden.split(' '),
-        );
+        getElements(options).container.classList.remove(...baseCssClassNames.hidden.split(' '));
       },
       delete: (options) => {
         getElements(options).container.remove();
       },
-      onOkButtonClick:
-        (options, handler) => registerClickHandler(getElements(options).buttons.ok, handler),
-      onReadMoreButtonClick:
-        (options, handler) => registerClickHandler(getElements(options).buttons.more, handler),
+      onOkButtonClick: (options, handler) =>
+        registerClickHandler(getElements(options).buttons.ok, handler),
+      onReadMoreButtonClick: (options, handler) =>
+        registerClickHandler(getElements(options).buttons.more, handler),
     };
   })();
   const consentCookies = (() => {
@@ -152,8 +154,10 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
     }
   }
   function shouldShowBanner(options) {
-    if (options.is_always_visible
-      || options.always_show /* for backwards compatibility in 1.X.X */) {
+    if (
+      options.is_always_visible ||
+      options.always_show /* for backwards compatibility in 1.X.X */
+    ) {
       return true;
     }
     const queryParamToShow = 'force-consent';
@@ -175,10 +179,13 @@ export const ez_consent = (() => { // eslint-disable-line camelcase
         Object.keys(source).forEach((key) => {
           const sourceValue = source[key];
           const targetValue = target[key];
-          // eslint-disable-next-line no-param-reassign
-          target[key] = targetValue && sourceValue && typeof targetValue === 'object' && typeof sourceValue === 'object'
-            ? objectAssignRecursively(targetValue, sourceValue)
-            : sourceValue;
+          target[key] =
+            targetValue &&
+            sourceValue &&
+            typeof targetValue === 'object' &&
+            typeof sourceValue === 'object'
+              ? objectAssignRecursively(targetValue, sourceValue)
+              : sourceValue;
         });
       });
       return target;

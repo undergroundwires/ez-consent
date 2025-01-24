@@ -10,6 +10,7 @@
 [![](https://github.com/undergroundwires/ez-consent/workflows/Bump%20&%20release/badge.svg)](./.github/workflows/bump-and-release.yaml)
 [![](https://github.com/undergroundwires/ez-consent/workflows/Quality%20checks/badge.svg)](./.github/workflows/quality-checks.yaml)
 [![Auto-versioned by bump-everywhere](https://github.com/undergroundwires/bump-everywhere/blob/master/badge.svg?raw=true)](https://github.com/undergroundwires/bump-everywhere)
+
 <!-- [![](https://img.shields.io/npm/dm/ez-consent)](https://www.npmjs.com/package/ez-consent) -->
 
 - Vanilla JavaScript only ✔️
@@ -31,11 +32,11 @@ The simplest way to get started is to add it to your page:
 
 ```html
 <script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/ez-consent@^1/dist/ez-consent.min.js"
-    defer
-    async
-    onload="
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/ez-consent@^1/dist/ez-consent.min.js"
+  defer
+  async
+  onload="
         ez_consent.init({
             privacy_url: '/privacy',
             texts: {
@@ -51,7 +52,7 @@ The simplest way to get started is to add it to your page:
 
 See [Initialize the script](#2-initialize) for additional options and alternative ways.
 
-*[top↑](#ez-consent)*
+_[top↑](#ez-consent)_
 
 ### Advanced Usage
 
@@ -73,8 +74,8 @@ Add it to your page:
 
 ```html
 <script
-    type="text/javascript"
-    src="/node_modules/ez-consent/dist/ez-consent.min.js"
+  type="text/javascript"
+  src="/node_modules/ez-consent/dist/ez-consent.min.js"
 ></script>
 ```
 
@@ -90,10 +91,10 @@ Or you can import `ez_consent` as a module:
 Or import it via `webpack`, `gulp`, `rollup` etc.:
 
 ```js
-import { ez_consent } from "./node_modules/ez-consent/src/ez-consent"
+import { ez_consent } from './node_modules/ez-consent/src/ez-consent';
 ```
 
-*[top↑](#ez-consent)*
+_[top↑](#ez-consent)_
 
 #### 2. Initialize
 
@@ -103,11 +104,11 @@ experience by optimizing script loading. This can help your pages rank better in
 
 ```html
 <script
-    type="text/javascript"
-    src="/node_modules/ez-consent/dist/ez-consent.min.js"
-    async
-    defer
-    onload="
+  type="text/javascript"
+  src="/node_modules/ez-consent/dist/ez-consent.min.js"
+  async
+  defer
+  onload="
         ez_consent.init({
             privacy_url: '/privacy',
             texts: {
@@ -130,39 +131,38 @@ ez_consent.init();
 See all options:
 
 ```js
-ez_consent.init(
-  {
-    is_always_visible: false,       // Always shows banner on load, default: false
-    privacy_url: "/privacy",        // URL that "more" button goes to, default: "/privacy/"
-    more_button: {
-      target_attribute : "_blank",  // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab
-      is_consenting: true           // Controls whether clicking the 'more' button automatically gives consent and removes the banner, default: true
+ez_consent.init({
+  is_always_visible: false, // Always shows banner on load, default: false
+  privacy_url: '/privacy', // URL that "more" button goes to, default: "/privacy/"
+  more_button: {
+    target_attribute: '_blank', // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab
+    is_consenting: true, // Controls whether clicking the 'more' button automatically gives consent and removes the banner, default: true
+  },
+  texts: {
+    main: 'We use cookies', // The text that's shown on the banner, default: "This website uses cookies & similar."
+    buttons: {
+      ok: 'ok', // OK button to hide the text, default: "ok"
+      more: 'more', // More/accept button that shows the privacy policy, default "more"
     },
-    texts: {
-      main: "We use cookies",       // The text that's shown on the banner, default: "This website uses cookies & similar."
-      buttons:
-      {
-        ok: "ok",                   // OK button to hide the text, default: "ok"
-        more: "more"                // More/accept button that shows the privacy policy, default "more"
-      }
+  },
+  css_classes: {
+    // CSS class name overrides
+    container: 'container', // Main container element, default: "cookie-consent"
+    message_text: 'mainText', // Main message text container, default: "cookie-consent__text"
+    buttons: {
+      wrapper: 'buttonsWrapper', // Button container, default: "cookie-consent__buttons"
+      more: 'moreButton', // More info button, default: "cookie-consent__button cookie-consent__button--more"
+      ok: 'okButton', // More/accept button, default: "cookie-consent__button cookie-consent__button--ok"
     },
-    css_classes: {                  // CSS class name overrides
-      container: 'container',       // Main container element, default: "cookie-consent"
-      message_text: 'mainText',     // Main message text container, default: "cookie-consent__text"
-      buttons: {
-        wrapper: 'buttonsWrapper',  // Button container, default: "cookie-consent__buttons"
-        more: 'moreButton',         // More info button, default: "cookie-consent__button cookie-consent__button--more"
-        ok: 'okButton',             // More/accept button, default: "cookie-consent__button cookie-consent__button--ok"
-      },
-    },
-  });
+  },
+});
 ```
 
 The banner will be shown if the user has not yet agreed to read & understand the information.
 You can force the banner to always show by including the `force-consent` query parameter in the URL.
 Example for `https://test.com/fest` page: `test.com/fest?force-consent`.
 
-*[top↑](#ez-consent)*
+_[top↑](#ez-consent)_
 
 #### 3. Style
 
@@ -177,7 +177,10 @@ You can choose one of the following existing themes to begin:
 [Source file](./src/themes/box-bottom-left.css) | [See it live](https://cloudarchitecture.io/?force-consent) | [Preview on CodePen](https://codepen.io/undergroundwires/pen/qBdzmyj)
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@^1/dist/themes/box-bottom-left.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/ez-consent@^1/dist/themes/box-bottom-left.min.css"
+/>
 ```
 
 ###### subtle-bottom-right.css
@@ -188,7 +191,10 @@ You can choose one of the following existing themes to begin:
 [Source file](./src/themes/subtle-bottom-right.css) | [See it live](https://erkinekici.com/?force-consent) | [Preview on CodePen](https://codepen.io/undergroundwires/pen/MWwMmqw)
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/themes/subtle-bottom-right.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/ez-consent@1/dist/themes/subtle-bottom-right.min.css"
+/>
 ```
 
 ##### Custom Themes
@@ -199,7 +205,7 @@ You can also add your own class names using `css_classes` option, see [initializ
 
 You're welcome to contribute your theme to the project in [`./src/themes`](./src/themes/) folder by creating a pull request 👍.
 
-*[top↑](#ez-consent)*
+_[top↑](#ez-consent)_
 
 ## Distributed files
 
@@ -208,7 +214,7 @@ The repository and deployed packages include a `dist/` folder that adds polyfill
 - minified (`.min.js`, `.min.css`) files for production usage
 - non-minified (`.js`, `.css`) files for debugging
 
-*[top↑](#ez-consent)*
+_[top↑](#ez-consent)_
 
 ## GitOps
 
@@ -216,4 +222,4 @@ CI/CD is fully automated for this repo using different Git events & GitHub actio
 
 ![ez-consent continuous integration and deployment flow](./img/gitops.drawio.png)
 
-*[top↑](#ez-consent)*
+_[top↑](#ez-consent)_

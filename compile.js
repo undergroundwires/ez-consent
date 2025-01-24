@@ -1,4 +1,4 @@
-/* eslint-disable no-console, import/no-extraneous-dependencies */
+/* global require, console, process */
 
 const fs = require('fs');
 const babel = require('@babel/core');
@@ -16,12 +16,18 @@ async function main() {
   try {
     await deleteFolderRecursive(outputFolder);
     await fs.promises.mkdir(outputFolder, { recursive: true });
-    const noModulesCode = (await babel.transformFileAsync(inputFile, {
-      plugins: ['remove-import-export'],
-    })).code;
+    const noModulesCode = (
+      await babel.transformFileAsync(inputFile, {
+        plugins: ['remove-import-export'],
+      })
+    ).code;
     await Promise.all([
       compile(noModulesCode, path.join(outputFolder, path.basename(inputFile))),
-      compile(noModulesCode, path.join(outputFolder, `${removeExtension(path.basename(inputFile))}.min.js`), true),
+      compile(
+        noModulesCode,
+        path.join(outputFolder, `${removeExtension(path.basename(inputFile))}.min.js`),
+        true,
+      ),
       minifyCss(cssFolder, path.join(outputFolder, 'themes')),
     ]);
   } catch (err) {
@@ -33,19 +39,21 @@ async function main() {
 async function minifyCss(srcDir, targetDir) {
   const files = await fs.promises.readdir(srcDir);
   const cleanCSS = new CleanCSS();
-  return Promise.all(files.map(async (name) => {
-    const filePath = path.join(srcDir, name);
-    // Copy the CSS file without modification
-    const nonMinifiedTarget = path.join(targetDir, name);
-    await copyFile(filePath, nonMinifiedTarget);
-    console.log(`CSS copied to "${nonMinifiedTarget}".`);
-    // Minify content
-    const content = await fs.promises.readFile(filePath, 'utf-8');
-    const minified = cleanCSS.minify(content).styles;
-    const targetPath = path.join(targetDir, `${removeExtension(path.basename(name))}.min.css`);
-    await fs.promises.writeFile(targetPath, minified);
-    console.log(`CSS minified to "${targetPath}".`);
-  }));
+  return Promise.all(
+    files.map(async (name) => {
+      const filePath = path.join(srcDir, name);
+      // Copy the CSS file without modification
+      const nonMinifiedTarget = path.join(targetDir, name);
+      await copyFile(filePath, nonMinifiedTarget);
+      console.log(`CSS copied to "${nonMinifiedTarget}".`);
+      // Minify content
+      const content = await fs.promises.readFile(filePath, 'utf-8');
+      const minified = cleanCSS.minify(content).styles;
+      const targetPath = path.join(targetDir, `${removeExtension(path.basename(name))}.min.css`);
+      await fs.promises.writeFile(targetPath, minified);
+      console.log(`CSS minified to "${targetPath}".`);
+    }),
+  );
 }
 
 async function copyFile(src, dest) {
@@ -67,7 +75,9 @@ async function compile(codeString, targetPath, minifyCode = false) {
       outfile: targetPath,
       minify: minifyCode,
     });
-    console.log(`JavaScript compiled to "${targetPath}" (${minifyCode ? 'minified' : 'not minified'}).`);
+    console.log(
+      `JavaScript compiled to "${targetPath}" (${minifyCode ? 'minified' : 'not minified'}).`,
+    );
   } catch (error) {
     console.error('esbuild failed during compilation:', error);
     process.exit(1);

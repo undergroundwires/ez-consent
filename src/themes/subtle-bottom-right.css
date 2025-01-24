@@ -1,53 +1,64 @@
 :root {
-    --cookie-consent-spacing-large      : calc(var(--cookie-consent-spacing-medium) * 1.75);
-    --cookie-consent-spacing-medium     : 0.5rem;
-    --cookie-consent-spacing-small      : calc(var(--cookie-consent-spacing-medium) / 2);
-    --cookie-consent-color-primary      : black;
-    --cookie-consent-color-secondary    : #a9a9b3;
+  --cookie-consent-spacing-large: calc(
+    var(--cookie-consent-spacing-medium) * 1.75
+  );
+  --cookie-consent-spacing-medium: 0.5rem;
+  --cookie-consent-spacing-small: calc(
+    var(--cookie-consent-spacing-medium) / 2
+  );
+  --cookie-consent-color-primary: black;
+  --cookie-consent-color-secondary: #a9a9b3;
 }
 
 .cookie-consent {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    position: fixed; /* Ensure nothing overflows on page or flex + fixed position does not work. */
-    bottom: 0;
-    right: 0;
-    margin: var(--cookie-consent-spacing-small);
-    padding: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-medium);
-    gap: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-large);
-    background-color: inherit;
-    border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin: var(--cookie-consent-spacing-small);
+  padding: var(--cookie-consent-spacing-small)
+    var(--cookie-consent-spacing-medium);
+  gap: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-large);
+  background-color: inherit;
+  border-radius: 10px;
+
+  /* Ensure nothing overflows on page or flex + fixed position does not work. */
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }
 
 .cookie-consent__text {
-    padding-inline-end: var(--cookie-consent-spacing-large);
-    border-inline-end: 1px solid var(--cookie-consent-color-secondary);
+  padding-inline-end: var(--cookie-consent-spacing-large);
+  border-inline-end: 1px solid var(--cookie-consent-color-secondary);
 }
 
 .cookie-consent__buttons {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    gap: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-large);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  gap: var(--cookie-consent-spacing-small) var(--cookie-consent-spacing-large);
 }
 
 .cookie-consent__button {
-    cursor: pointer;
-    border-radius: 3px;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
 .cookie-consent__button--ok {
-    background: var(--cookie-consent-color-secondary);
-    color: var(--cookie-consent-color-primary);
-    padding-block: var(--cookie-consent-spacing-small);     /* Vertical (top/bottom) */
-    padding-inline: var(--cookie-consent-spacing-medium);   /* Horizontal (left/right) */
+  background: var(--cookie-consent-color-secondary);
+  color: var(--cookie-consent-color-primary);
+
+  /* Vertical (top/bottom) */
+  padding-block: var(--cookie-consent-spacing-small);
+
+  /* Horizontal (left/right) */
+  padding-inline: var(--cookie-consent-spacing-medium);
 }
 
-.cookie-consent__button--more>a {
-    color: inherit;
-    text-decoration: underline;
+.cookie-consent__button--more > a {
+  color: inherit;
+  text-decoration: underline;
 }
