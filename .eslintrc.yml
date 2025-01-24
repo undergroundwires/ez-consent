@@ -11,3 +11,5 @@ parserOptions:
 rules: {
   "no-use-before-define": 0
 }
+ignorePatterns:
+  - 'dist/'

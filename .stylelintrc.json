@@ -7,5 +7,6 @@
         "message": "Expected class selector to match BEM CSS pattern: https://en.bem.info/methodology/css"
       }
     ]
-  }
+  },
+  "ignoreFiles": ["dist/**/*"]
 }
