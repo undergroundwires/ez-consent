@@ -11,6 +11,7 @@ jobs:
           - lint:css
           - lint:md
           - lint:md:urls:relative
+          - lint:md:urls:external
           - lint:md:consistency
     steps:
       - name: Checkout

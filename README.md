@@ -199,7 +199,7 @@ You can choose one of the following existing themes to begin:
 
 ##### Custom Themes
 
-Or you can create your own theme & import it. Check example themes at [existing themes](./src/themes/). [The HTML](./src/ez-consent.js#L18) uses only a few classes using [BEM](http://getbem.com/naming/) naming convention.
+Or you can create your own theme & import it. Check example themes at [existing themes](./src/themes/). [The HTML](./src/ez-consent.js#L18) uses only a few classes using [BEM](https://getbem.com/naming/) naming convention.
 
 You can also add your own class names using `css_classes` option, see [initialization](#2-initialize) for details.
 
