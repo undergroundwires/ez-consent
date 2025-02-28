@@ -64,10 +64,10 @@ export const ez_consent = (() => {
     function getElements(options) {
       const selectElementByClassNames = (classNames) => {
         const elements = document.getElementsByClassName(classNames);
-        if (!elements.length === 0) {
+        if (elements.length === 0) {
           throw new Error(`No elements found for query: ${classNames}`);
         }
-        if (!elements.length > 1) {
+        if (elements.length > 1) {
           throw new Error(`Multiple elements found for query: ${classNames}`);
         }
         return elements[0];
