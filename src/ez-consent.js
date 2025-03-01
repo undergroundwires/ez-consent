@@ -1,10 +1,11 @@
-/* global document, location */
+/* global document, location, window */
 
 export const ez_consent = (() => {
   const mergeCssClassNames = (...classNames) => classNames.join(' ');
   const defaultOptions = {
     is_always_visible: false,
     privacy_url: '/privacy',
+    enable_google_consent_mode: false,
     more_button: {
       target_attribute: '_blank',
       is_consenting: true,
@@ -140,17 +141,68 @@ export const ez_consent = (() => {
       setCookie,
     };
   })();
-  async function initializeUiAsync(options) {
+  const googleConsent = (() => {
+    // Guidance: https://support.google.com/analytics/answer/10000067?hl=en
+    const pingGoogle = (
+      consent_arg, // 'default' or 'update', see: https://web.archive.org/web/20250228180948/https://developers.google.com/tag-platform/gtagjs/reference#consent
+    ) => {
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      gtag('consent', consent_arg, {
+        // Parameters: https://web.archive.org/web/20250228172407/https://support.google.com/tagmanager/answer/13802165?hl=en
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+        analytics_storage: 'granted',
+        functionality_storage: 'granted',
+        personalization_storage: 'granted',
+        security_storage: 'granted',
+      });
+    };
+    return {
+      // Guidance:
+      initialize: (options) => {
+        if (!options.enable_google_consent_mode) {
+          return;
+        }
+        window.dataLayer = window.dataLayer || [];
+        if (isConsentGranted()) {
+          pingGoogle('update');
+        } else {
+          pingGoogle('default');
+        }
+      },
+      notifyConsentGranted: (options) => {
+        if (!options.enable_google_consent_mode) {
+          return;
+        }
+        pingGoogle('update');
+      },
+    };
+  })();
+  function onUserConsentGranted(options) {
+    consentCookies.setCookie();
+    ui.delete(options);
+    googleConsent.notifyConsentGranted(options);
+  }
+  async function onInitialization(options) {
+    googleConsent.initialize(options);
+    if (shouldShowBanner(options)) {
+      await initializeUi(options);
+    }
+  }
+  async function initializeUi(options) {
     await ui.injectHtmlAsync(options);
     ui.injectCss();
     ui.showElement(options);
-    const setCookieAndDestroy = () => {
-      consentCookies.setCookie();
-      ui.delete(options);
-    };
-    ui.onOkButtonClick(options, setCookieAndDestroy);
+    ui.onOkButtonClick(options, () => {
+      onUserConsentGranted(options);
+    });
     if (options.more_button.is_consenting) {
-      ui.onReadMoreButtonClick(options, setCookieAndDestroy);
+      ui.onReadMoreButtonClick(options, () => {
+        onUserConsentGranted(options);
+      });
     }
   }
   function shouldShowBanner(options) {
@@ -164,7 +216,11 @@ export const ez_consent = (() => {
     if (new RegExp(`[?&]${queryParamToShow}`).test(location.search)) {
       return true;
     }
-    return !consentCookies.getCookie();
+    return !isConsentGranted();
+  }
+  function isConsentGranted() {
+    const cookie = consentCookies.getCookie();
+    return cookie !== undefined;
   }
   function fillDefaults(options) {
     return objectAssignRecursively(defaultOptions, options || {});
@@ -193,9 +249,7 @@ export const ez_consent = (() => {
   }
   async function initializeAsync(options) {
     const completeOptions = fillDefaults(options);
-    if (shouldShowBanner(completeOptions)) {
-      await initializeUiAsync(completeOptions);
-    }
+    await onInitialization(completeOptions);
   }
   return {
     init: (options) => initializeAsync(options),

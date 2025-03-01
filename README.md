@@ -17,6 +17,7 @@
 - It does not track you ✔️
 - Very lightweight with no dependencies ✔️
 - Single line to get started ✔️
+- Supports [Google consent mode](https://support.google.com/google-ads/answer/10000067?hl=en) ✔️
 
 Examples:
 
@@ -134,6 +135,7 @@ See all options:
 ez_consent.init({
   is_always_visible: false, // Always shows banner on load, default: false
   privacy_url: '/privacy', // URL that "more" button goes to, default: "/privacy/"
+  enable_google_consent_mode: false, // Sends consent state to Google (enables Google consent mode)
   more_button: {
     target_attribute: '_blank', // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab
     is_consenting: true, // Controls whether clicking the 'more' button automatically gives consent and removes the banner, default: true
