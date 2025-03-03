@@ -135,6 +135,7 @@ See all options:
 ez_consent.init({
   is_always_visible: false, // Always shows banner on load, default: false
   privacy_url: '/privacy', // URL that "more" button goes to, default: "/privacy/"
+  consent_duration: 'P10Y', // Consent duration (cookie expiry date), default: 10 years. ISO 8601 format, decimals are not supported.
   enable_google_consent_mode: false, // Sends consent state to Google (enables Google consent mode)
   more_button: {
     target_attribute: '_blank', // Determines what the behavior of the 'more' button is, default: "_blank", opens the privacy page in a new tab

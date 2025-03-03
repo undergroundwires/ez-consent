@@ -6,6 +6,7 @@ export const ez_consent = (() => {
     is_always_visible: false,
     privacy_url: '/privacy',
     enable_google_consent_mode: false,
+    consent_duration: 'P10Y',
     more_button: {
       target_attribute: '_blank',
       is_consenting: true,
@@ -117,6 +118,74 @@ export const ez_consent = (() => {
   })();
   const consentCookies = (() => {
     const consentCookieName = 'cookie-consent';
+    function parseISO8601DurationToDate(duration) {
+      // Standard: https://en.wikipedia.org/wiki/ISO_8601#Durations
+      if (!duration || typeof duration !== 'string') {
+        throw new Error(`Expected ISO-8601 duration string, got ${typeof duration}: ${duration}`);
+      }
+      if (!duration.startsWith('P')) {
+        throw new Error(`Invalid ISO-8601 duration: Missing 'P' at start: ${duration}`);
+      }
+      if (duration.toUpperCase() !== duration) {
+        throw new Error(`Invalid ISO-8601 duration: Must use uppercase letters only: ${duration}`);
+      }
+      duration = duration.substring(1); // Remove P
+      let hasSeenT = false;
+      let currentNumberText = '';
+      let isDateExtracted = false;
+      const date = new Date();
+      const unitHandlers = {
+        Y: (value) => date.setFullYear(date.getFullYear() + value),
+        M: (value) => {
+          // M can be month or minutes
+          if (hasSeenT) {
+            date.setMinutes(date.getMinutes() + value);
+            return;
+          }
+          date.setMonth(date.getMonth() + value);
+        },
+        W: (value) => date.setDate(date.getDate() + value * 7),
+        D: (value) => date.setDate(date.getDate() + value),
+        H: (value) => date.setHours(date.getHours() + value),
+        S: (value) => date.setSeconds(date.getSeconds() + value),
+      };
+      for (const char of duration) {
+        if (char === 'T') {
+          hasSeenT = true;
+          if (currentNumberText) {
+            throw Error(
+              `Number ${currentNumberText} without unit before T in duration text: ${duration}`,
+            );
+          }
+          continue;
+        } else if (char === ',' || char === '.') {
+          throw new Error(
+            `Decimal values are not supported in ISO-8601 durations: "${char}" in "${duration}"`,
+          );
+        } else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(char)) {
+          currentNumberText += char;
+          continue;
+        } else if (currentNumberText) {
+          const value = parseFloat(currentNumberText);
+          const handler = unitHandlers[char];
+          if (handler) {
+            unitHandlers[char](value);
+            isDateExtracted = true;
+            currentNumberText = '';
+            continue;
+          }
+        }
+        throw new Error(
+          `Invalid character '${char}' in ISO-8601 duration. Expected Y, M, W, D, H, or S designators: ${duration}`,
+        );
+      }
+      if (!isDateExtracted) {
+        throw new Error(
+          `Invalid ISO-8601 duration: No valid duration components (Y, M, W, D, H, S) found in: ${duration}`,
+        );
+      }
+      return date;
+    }
     const getCookie = () => {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${consentCookieName}=`);
@@ -125,11 +194,10 @@ export const ez_consent = (() => {
       }
       return undefined;
     };
-    const setCookie = () => {
+    const setCookie = (options) => {
       const cookieParts = [];
       cookieParts.push(`${consentCookieName}=dismissed`);
-      const date = new Date();
-      date.setFullYear(date.getFullYear() + 10);
+      const date = parseISO8601DurationToDate(options.consent_duration);
       cookieParts.push(`expires=${date.toUTCString()}`);
       cookieParts.push('path=/');
       cookieParts.push(`domain=${location.hostname.replace(/^www\./i, '')}`);
@@ -182,7 +250,7 @@ export const ez_consent = (() => {
     };
   })();
   function onUserConsentGranted(options) {
-    consentCookies.setCookie();
+    consentCookies.setCookie(options);
     ui.delete(options);
     googleConsent.notifyConsentGranted(options);
   }
