@@ -25,20 +25,20 @@
   },
   "homepage": "https://github.com/undergroundwires/ez-consent#readme",
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@eslint/js": "^9.18.0",
+    "@babel/core": "^7.26.9",
+    "@eslint/js": "^9.21.0",
     "babel-plugin-remove-import-export": "^1.1.1",
     "clean-css": "^5.3.3",
-    "esbuild": "0.24.2",
-    "eslint": "^9.18.0",
+    "esbuild": "0.25.0",
+    "eslint": "^9.21.0",
     "eslint-plugin-import": "^2.31.0",
-    "markdownlint-cli": "^0.43.0",
-    "prettier": "3.4.2",
+    "markdownlint-cli": "^0.44.0",
+    "prettier": "3.5.3",
     "remark-cli": "^12.0.1",
     "remark-lint-no-dead-urls": "^2.0.1",
-    "remark-preset-lint-consistent": "^6.0.0",
-    "remark-validate-links": "^13.0.2",
-    "stylelint": "^16.12.0",
-    "stylelint-config-standard": "^36.0.1"
+    "remark-preset-lint-consistent": "^6.0.1",
+    "remark-validate-links": "^13.1.0",
+    "stylelint": "^16.15.0",
+    "stylelint-config-standard": "^37.0.0"
   }
 }
