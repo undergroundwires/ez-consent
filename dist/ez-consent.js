@@ -3,6 +3,8 @@ const ez_consent = (() => {
   const defaultOptions = {
     is_always_visible: false,
     privacy_url: "/privacy",
+    enable_google_consent_mode: false,
+    consent_duration: "P10Y",
     more_button: {
       target_attribute: "_blank",
       is_consenting: true
@@ -67,10 +69,10 @@ const ez_consent = (() => {
     function getElements(options) {
       const selectElementByClassNames = (classNames) => {
         const elements = document.getElementsByClassName(classNames);
-        if (!elements.length === 0) {
+        if (elements.length === 0) {
           throw new Error(`No elements found for query: ${classNames}`);
         }
-        if (!elements.length > 1) {
+        if (elements.length > 1) {
           throw new Error(`Multiple elements found for query: ${classNames}`);
         }
         return elements[0];
@@ -117,6 +119,64 @@ const ez_consent = (() => {
   })();
   const consentCookies = /* @__PURE__ */ (() => {
     const consentCookieName = "cookie-consent";
+    function parseISO8601DurationToDate(duration) {
+      if (!duration || typeof duration !== "string") {
+        throw new Error(`Expected ISO-8601 duration string, got ${typeof duration}: ${duration}`);
+      }
+      if (!duration.startsWith("P")) {
+        throw new Error(`Invalid ISO-8601 duration: Missing 'P' at start: ${duration}`);
+      }
+      if (duration.toUpperCase() !== duration) {
+        throw new Error(`Invalid ISO-8601 duration: Must use uppercase letters only: ${duration}`);
+      }
+      duration = duration.substring(1);
+      let hasSeenT = false;
+      let currentNumberText = "";
+      let isDateExtracted = false;
+      const date = /* @__PURE__ */ new Date();
+      const unitHandlers = {
+        Y: (value) => date.setFullYear(date.getFullYear() + value),
+        M: (value) => {
+          if (hasSeenT) {
+            date.setMinutes(date.getMinutes() + value);
+            return;
+          }
+          date.setMonth(date.getMonth() + value);
+        },
+        W: (value) => date.setDate(date.getDate() + value * 7),
+        D: (value) => date.setDate(date.getDate() + value),
+        H: (value) => date.setHours(date.getHours() + value),
+        S: (value) => date.setSeconds(date.getSeconds() + value)
+      };
+      for (const char of duration) {
+        if (char === "T") {
+          hasSeenT = true;
+          if (currentNumberText) {
+            throw Error(`Number ${currentNumberText} without unit before T in duration text: ${duration}`);
+          }
+          continue;
+        } else if (char === "," || char === ".") {
+          throw new Error(`Decimal values are not supported in ISO-8601 durations: "${char}" in "${duration}"`);
+        } else if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(char)) {
+          currentNumberText += char;
+          continue;
+        } else if (currentNumberText) {
+          const value = parseFloat(currentNumberText);
+          const handler = unitHandlers[char];
+          if (handler) {
+            unitHandlers[char](value);
+            isDateExtracted = true;
+            currentNumberText = "";
+            continue;
+          }
+        }
+        throw new Error(`Invalid character '${char}' in ISO-8601 duration. Expected Y, M, W, D, H, or S designators: ${duration}`);
+      }
+      if (!isDateExtracted) {
+        throw new Error(`Invalid ISO-8601 duration: No valid duration components (Y, M, W, D, H, S) found in: ${duration}`);
+      }
+      return date;
+    }
     const getCookie = () => {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${consentCookieName}=`);
@@ -125,11 +185,10 @@ const ez_consent = (() => {
       }
       return void 0;
     };
-    const setCookie = () => {
+    const setCookie = (options) => {
       const cookieParts = [];
       cookieParts.push(`${consentCookieName}=dismissed`);
-      const date = /* @__PURE__ */ new Date();
-      date.setFullYear(date.getFullYear() + 10);
+      const date = parseISO8601DurationToDate(options.consent_duration);
       cookieParts.push(`expires=${date.toUTCString()}`);
       cookieParts.push("path=/");
       cookieParts.push(`domain=${location.hostname.replace(/^www\./i, "")}`);
@@ -141,17 +200,65 @@ const ez_consent = (() => {
       setCookie
     };
   })();
-  async function initializeUiAsync(options) {
+  const googleConsent = /* @__PURE__ */ (() => {
+    const pingGoogle = (consent_arg) => {
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      gtag("consent", consent_arg, {
+        // Parameters: https://web.archive.org/web/20250228172407/https://support.google.com/tagmanager/answer/13802165?hl=en
+        ad_storage: "granted",
+        ad_user_data: "granted",
+        ad_personalization: "granted",
+        analytics_storage: "granted",
+        functionality_storage: "granted",
+        personalization_storage: "granted",
+        security_storage: "granted"
+      });
+    };
+    return {
+      // Guidance:
+      initialize: (options) => {
+        if (!options.enable_google_consent_mode) {
+          return;
+        }
+        window.dataLayer = window.dataLayer || [];
+        if (isConsentGranted()) {
+          pingGoogle("update");
+        } else {
+          pingGoogle("default");
+        }
+      },
+      notifyConsentGranted: (options) => {
+        if (!options.enable_google_consent_mode) {
+          return;
+        }
+        pingGoogle("update");
+      }
+    };
+  })();
+  function onUserConsentGranted(options) {
+    consentCookies.setCookie(options);
+    ui.delete(options);
+    googleConsent.notifyConsentGranted(options);
+  }
+  async function onInitialization(options) {
+    googleConsent.initialize(options);
+    if (shouldShowBanner(options)) {
+      await initializeUi(options);
+    }
+  }
+  async function initializeUi(options) {
     await ui.injectHtmlAsync(options);
     ui.injectCss();
     ui.showElement(options);
-    const setCookieAndDestroy = () => {
-      consentCookies.setCookie();
-      ui.delete(options);
-    };
-    ui.onOkButtonClick(options, setCookieAndDestroy);
+    ui.onOkButtonClick(options, () => {
+      onUserConsentGranted(options);
+    });
     if (options.more_button.is_consenting) {
-      ui.onReadMoreButtonClick(options, setCookieAndDestroy);
+      ui.onReadMoreButtonClick(options, () => {
+        onUserConsentGranted(options);
+      });
     }
   }
   function shouldShowBanner(options) {
@@ -162,7 +269,11 @@ const ez_consent = (() => {
     if (new RegExp(`[?&]${queryParamToShow}`).test(location.search)) {
       return true;
     }
-    return !consentCookies.getCookie();
+    return !isConsentGranted();
+  }
+  function isConsentGranted() {
+    const cookie = consentCookies.getCookie();
+    return cookie !== void 0;
   }
   function fillDefaults(options) {
     return objectAssignRecursively(defaultOptions, options || {});
@@ -179,9 +290,7 @@ const ez_consent = (() => {
   }
   async function initializeAsync(options) {
     const completeOptions = fillDefaults(options);
-    if (shouldShowBanner(completeOptions)) {
-      await initializeUiAsync(completeOptions);
-    }
+    await onInitialization(completeOptions);
   }
   return {
     init: (options) => initializeAsync(options)

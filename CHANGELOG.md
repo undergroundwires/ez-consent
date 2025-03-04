@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.0 (2025-03-04)
+
+* Update CDN links in README to provide latest major | [5dbc0bb](https://github.com/undergroundwires/ez-consent/commit/5dbc0bb6200ed4e96a1f2532df984ad9d474e075)
+* Ignore linting `dist/` folder | [9557845](https://github.com/undergroundwires/ez-consent/commit/9557845c35b1c7f8f63ed46224fa39bff37f09b5)
+* Use ESLint standard + Prettier, drop Airbnb | [e8af173](https://github.com/undergroundwires/ez-consent/commit/e8af1737c65726b72a1d838953d4340e01894811)
+* Add external URL health checks in CI/CD | [99ff0ed](https://github.com/undergroundwires/ez-consent/commit/99ff0edff280c222ff53d666a4467ac6d1172f3a)
+* Fix broken UI detection logic | [b06dc2d](https://github.com/undergroundwires/ez-consent/commit/b06dc2df153b160f9e94f23555acd22e89e27b53)
+* Add support for Google consent mode | [b37aa4f](https://github.com/undergroundwires/ez-consent/commit/b37aa4fcd746c9fca97513e7827923cb87a46af4)
+* Add ability to configure consent expiration #13 | [3c9203b](https://github.com/undergroundwires/ez-consent/commit/3c9203bb0f5a9dcbbef51f4c07431928fe9453b5)
+* Bump dependencies to latest | [b40eecb](https://github.com/undergroundwires/ez-consent/commit/b40eecb6d471aa4c42915f074463c3f3ee4d6009)
+
+[compare](https://github.com/undergroundwires/ez-consent/compare/1.3.1...1.4.0)
+
 ## 1.3.1 (2025-01-18)
 
 * Update diagram in docs | [be09fd7](https://github.com/undergroundwires/ez-consent/commit/be09fd71be033c755cc75facc007e141cdc297a8)
