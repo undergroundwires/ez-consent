@@ -2,14 +2,12 @@
 
 > 🍪 A minimal, vanilla JavaScript cookie consent banner with no dependencies.
 
-[![](https://img.shields.io/npm/v/ez-consent)](https://www.npmjs.com/package/ez-consent)
-[![](https://data.jsdelivr.com/v1/package/npm/ez-consent/badge?style=rounded)](https://www.jsdelivr.com/package/npm/ez-consent)
-[![](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/undergroundwires/ez-consent/issues)
-[![](https://github.com/undergroundwires/ez-consent/workflows/Publish/badge.svg)](./.github/workflows/publish.yaml)
-[![](https://github.com/undergroundwires/ez-consent/workflows/Build%20&%20test/badge.svg)](./.github/workflows/build-and-test.yaml)
-[![](https://github.com/undergroundwires/ez-consent/workflows/Bump%20&%20release/badge.svg)](./.github/workflows/bump-and-release.yaml)
-[![](https://github.com/undergroundwires/ez-consent/workflows/Quality%20checks/badge.svg)](./.github/workflows/quality-checks.yaml)
-[![Auto-versioned by bump-everywhere](https://github.com/undergroundwires/bump-everywhere/blob/master/badge.svg?raw=true)](https://github.com/undergroundwires/bump-everywhere)
+<!-- Package information -->
+
+[![npm version](https://img.shields.io/npm/v/ez-consent)](https://www.npmjs.com/package/ez-consent)
+[![jsDelivr CDN statistics](https://data.jsdelivr.com/v1/package/npm/ez-consent/badge?style=rounded)](https://www.jsdelivr.com/package/npm/ez-consent)
+![Script size in bytes](https://img.shields.io/github/size/undergroundwires/ez-consent/dist%2Fez-consent.min.js)
+![GZipped script size in bytes](https://img.badgesize.io/undergroundwires/ez-consent/master/dist/ez-consent.min.js?compression=gzip)
 
 <!-- [![](https://img.shields.io/npm/dm/ez-consent)](https://www.npmjs.com/package/ez-consent) -->
 
@@ -17,6 +15,7 @@
 - It does not track you ✔️
 - Very lightweight with no dependencies ✔️
 - Single line to get started ✔️
+- Everything customizable, including language ✔️
 - Supports [Google consent mode](https://support.google.com/google-ads/answer/10000067?hl=en) ✔️
 
 Examples:
@@ -24,6 +23,15 @@ Examples:
 - [Live example 1](https://privacylearn.com/?force-consent)
 - [Live example 2](https://erkinekici.com/?force-consent)
 - [CodePen examples](https://codepen.io/collection/XRjMGP)
+
+<!-- Development status -->
+
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/undergroundwires/ez-consent/issues)
+[![Publish workflow status](https://github.com/undergroundwires/ez-consent/workflows/Publish/badge.svg)](./.github/workflows/publish.yaml)
+[![Build and test workflow status](https://github.com/undergroundwires/ez-consent/workflows/Build%20&%20test/badge.svg)](./.github/workflows/build-and-test.yaml)
+[![Bump and release workflow status](https://github.com/undergroundwires/ez-consent/workflows/Bump%20&%20release/badge.svg)](./.github/workflows/bump-and-release.yaml)
+[![Quality checks workflow status](https://github.com/undergroundwires/ez-consent/workflows/Quality%20checks/badge.svg)](./.github/workflows/quality-checks.yaml)
+[![Auto-versioned by bump-everywhere](https://github.com/undergroundwires/bump-everywhere/blob/master/badge.svg?raw=true)](https://github.com/undergroundwires/bump-everywhere)
 
 ## Usage
 
