@@ -11,7 +11,7 @@
     "lint:css": "stylelint \"**/*.css\"",
     "lint:md": "markdownlint **/*.md --ignore node_modules",
     "lint:md:urls:relative": "remark . --frail --use remark-validate-links",
-    "lint:md:urls:external": "remark . --frail --rc-path .remark-lint-no-dead-urls.mjs",
+    "lint:md:urls:external": "remark . --frail --rc-path .remark-lint-no-dead-urls.mjs --ignore-pattern CHANGELOG.md",
     "lint:md:consistency": "remark . --frail --use remark-preset-lint-consistent"
   },
   "repository": {
