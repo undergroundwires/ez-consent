@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Licensed under Creative Commons Attribution 4.0 International License
+  https://creativecommons.org/licenses/by/4.0/
+  Attribution: undergroundwires
+-->
+
+<svg
+   width="17.400024"
+   height="20.791098"
+   viewBox="0 0 17.400024 20.791098"
+   fill="none"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   version="1.1"
+   xmlns="http://www.w3.org/2000/svg">
+   <title>ez-consent icon</title>
+   <desc>A shield with cookie-like dots</desc>
+   <metadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:cc="http://creativecommons.org/ns#">
+         <cc:Work>
+            <cc:license
+               rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+            <cc:attributionName>undergroundwires</cc:attributionName>
+         </cc:Work>
+      </rdf:RDF>
+   </metadata>
+   <path
+      d="m 16.650024,11.35892 c 0,4.821774 -3.47813,7.232662 -7.612136,8.630976 a 0.99375152,0.96435477 0 0 1 -0.665814,-0.0096 C 4.2281303,18.591582 0.75,16.180694 0.75,11.35892 V 4.6084369 A 0.99375152,0.96435477 0 0 1 1.7437515,3.6440822 c 1.9875031,0 4.471882,-1.1572259 6.2010095,-2.6230451 a 1.1626893,1.1282951 0 0 1 1.510502,0 c 1.739066,1.4754628 4.213507,2.6230451 6.20101,2.6230451 a 0.99375152,0.96435477 0 0 1 0.993751,0.9643547 z"
+      stroke="#191970"
+      stroke-width="1.5"
+   />
+   <path
+      d="m 8.899889,4.0470588 c -5.5567082,0 -8.3385104,6.7884992 -4.4098012,10.7585502 C 8.418798,18.77566 15.136606,15.964585 15.136606,10.349404 14.490189,9.7180333 9.674899,4.8491635 8.899889,4.0470588"
+      fill="#f9a825"
+      stroke="none"
+   />
+   <path
+      d="m 7.136882,7.9889036 v 0.0063"
+      fill="none"
+      stroke="#191970"
+      stroke-width="1.25"
+   />
+   <path
+      d="m 11.241289,11.750753 v 0.0088"
+      fill="#8d6e63"
+      stroke="#191970"
+      stroke-width="1.5"
+   />
+   <path
+      d="m 8.983325,13.456383 v 0.0063"
+      stroke="#191970"
+      stroke-width="1.25"
+   />
+   <path
+      d="m 6.3697111,11.012549 v 0.01145"
+      stroke="#191970"
+      stroke-width="1.7"
+   />
+</svg>

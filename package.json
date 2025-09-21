@@ -2,6 +2,18 @@
   "name": "ez-consent",
   "version": "1.4.0",
   "description": "🍪 A minimal, vanilla JavaScript cookie consent banner with no dependencies.",
+  "icon": "img/logo.svg",
+  "keywords": [
+    "cookie",
+    "consent",
+    "gdpr",
+    "privacy",
+    "banner",
+    "lightweight",
+    "vanilla-js",
+    "no-dependencies",
+    "compliance"
+  ],
   "main": "src/ez-consent.js",
   "scripts": {
     "compile": "node compile.js",

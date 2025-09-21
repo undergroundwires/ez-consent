@@ -1,6 +1,6 @@
 # ez-consent
 
-> 🍪 A minimal, vanilla JavaScript cookie consent banner with no dependencies.
+> ![ez-consent logo](./img/logo.svg) A minimal, vanilla JavaScript cookie consent banner with no dependencies.
 
 <!-- Package information -->
 
