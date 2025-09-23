@@ -40,11 +40,14 @@ Examples:
 The simplest way to get started is to add it to your page:
 
 ```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/ez-consent@^1/dist/themes/subtle-bottom-right.min.css"
+/>
 <script
   type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/ez-consent@^1/dist/ez-consent.min.js"
   defer
-  async
   onload="
         ez_consent.init({
             privacy_url: '/privacy',
@@ -91,7 +94,7 @@ Add it to your page:
 Or you can import `ez_consent` as a module:
 
 ```html
-<script type="module" async defer>
+<script type="module" defer>
   import { ez_consent } from './ez-consent/src/ez-consent.js'; // /node_modules/ez-consent/ez-consent.js ...
   ez_consent.init();
 </script>
@@ -108,14 +111,13 @@ _[top↑](#ez-consent)_
 #### 2. Initialize
 
 When importing a script using the `<script>` element, it's recommended to use the `onload` attribute to initialize it.
-This approach allows you to keep both `async` and `defer` attributes, which improve webpage performance and user
+This approach allows you to use `defer` attribute, which improve webpage performance and user
 experience by optimizing script loading. This can help your pages rank better in search engines.
 
 ```html
 <script
   type="text/javascript"
   src="/node_modules/ez-consent/dist/ez-consent.min.js"
-  async
   defer
   onload="
         ez_consent.init({
